@@ -13,22 +13,33 @@ SO THAT I can do the project with my notes which are then emailed to me.
 
 ## Tech Stack
 
-Node.js
+### CSS
+Bootstrap
 
- ### npm
-Express.js,
-Handlebars,
-MySQL,
-sequelize,
-npm form-data,
-npm node-input-validator,
-npm canvas,
-npm youtube-search,
-Nodemailer
+### Tables
+User Model (username, password, email,id(pk)),
+Hobby(Tile) Model (id(pk), category, user_id(foreign-key))
+Video Model (video_title, description, thumbnail, id(pk), user_id(foreign-key), hobby_tile_id(forgein-key), YouTube_id)
+Notes Model (id(pk), title, video_id(fk), user_id(fk), content)
+
+### Work Flow (User pov)
+User will login, if there is no user create login
+Dispaly saved hobbies or search for a new hobby videos
+For each saved hobby there will be a tile for the user to click into after login
+When clicked a tile will take user to hobby page
+On hobby page they will be able view and save the vidoes associated with their hobby
+Next to the videos there will be a note taking section where the user can save notes and email the notes they take from the video
+
+### npm
+Express.js - server, GET & POST routes,
+Handlebars - renders HTML template,
+MySQL - database,
+sequelize - database models,
+Nodemailer - email automation
+bcrypt - encryption for login
 
 ### APIs
-YouTube
-
+YouTube - GET route
 
 Heroku
 
