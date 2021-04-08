@@ -32,8 +32,11 @@ Notes.init(
             },
         },
         video_id: {
-            type: DataTypes.STRING,
-            text: DataTypes.STRING,
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'video',
+                key: 'id',
+            },
         },
     },
     {
