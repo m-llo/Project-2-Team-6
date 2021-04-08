@@ -24,6 +24,17 @@ Notes.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        user_id: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'user',
+                key: 'id',
+            },
+        },
+        video_id: {
+            type: DataTypes.STRING,
+            text: DataTypes.STRING,
+        },
     },
     {
         sequelize,
