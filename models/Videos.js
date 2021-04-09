@@ -23,6 +23,13 @@ Videos.init(
                 key: 'id',
             },
         },
+        video_title: {
+            type: DataTypes.INTEGER,
+            references: {
+                model: 'video',
+                key: 'id',
+            },
+        },
         video_id: {
             type: DataTypes.INTEGER,
             url: DataTypes.STRING,

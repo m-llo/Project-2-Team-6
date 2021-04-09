@@ -1,7 +1,7 @@
 const User = require('./User');
 const Hobby = require('./Hobby');
-const Video = require('./Video');
-const Note = require('./Note');
+const Videos = require('./Videos');
+const Notes = require('./Notes');
 
 Hobby.belongsTo(User, {
     foreignKey: 'user_id'
@@ -12,38 +12,38 @@ User.hasMany(Hobby, {
     onDelete: 'CASCADE',
 });
 
-Video.belongsTo(User, {
+Videos.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-User.hasMany(Video, {
+User.hasMany(Videos, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE',
 });
 
-Note.belongsTo(User, {
+Notes.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-User.hasMany(Note, {
+User.hasMany(Notes, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE',
 });
 
-Video.belongsTo(Hobby, {
+Videos.belongsTo(Hobby, {
     foreignKey: 'hobby_id'
 });
 
-Hobby.hasMany(Video, {
+Hobby.hasMany(Videos, {
     foreignKey: 'hobby_id',
     onDelete: 'CASCADE',
 });
 
-Note.belongsTo(Video, {
+Notes.belongsTo(Videos, {
     foreignKey: 'video_id'
 });
 
-Video.hasMany(Note, {
+Videos.hasMany(Notes, {
     foreignKey: 'video_id',
     onDelete: 'CASCADE',
 });
@@ -52,6 +52,6 @@ Video.hasMany(Note, {
 module.exports = {
     User,
     Hobby,
-    Video,
-    Note,
+    Videos,
+    Notes,
 };
