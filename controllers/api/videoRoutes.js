@@ -4,16 +4,16 @@ const withAuth = require('../../utils/auth');
 
 
 
-router.get('/', withAuth, async (req, res) => {
-    try {
-      const videoData = await Videos.findByPk(req.params.id)
+// router.get('/', withAuth, async (req, res) => {
+//     try {
+//       const videoData = await Videos.findByPk(req.params.id)
     
-    const videos = videoData.map((video) => video.get({ plain: true }));
-        res.render('dashboard', { videos, loggedIn: req.session.loggedIn });
-      }catch (err) {
-      res.status(500).json(err);
-    }
-  });
+//     const videos = videoData.map((video) => video.get({ plain: true }));
+//         res.render('dashboard', { videos, loggedIn: req.session.loggedIn });
+//       }catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
 
 router.delete('/id', withAuth, async (req, res) => {
     try {
