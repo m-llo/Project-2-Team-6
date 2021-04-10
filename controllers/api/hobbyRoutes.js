@@ -44,7 +44,7 @@ router.get('/dashboard', withAuth, async (req, res) => {
              {
                 model: Videos,
                 attributes:[
-                    'video_title',
+                    'title',
                     'id',
                 ]
              }

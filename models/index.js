@@ -12,23 +12,23 @@ User.hasMany(Hobby, {
     onDelete: 'CASCADE',
 });
 
-Videos.belongsTo(User, {
-    foreignKey: 'user_id'
-});
+// Videos.belongsTo(User, {
+//     foreignKey: 'user_id'
+// });
 
-User.hasMany(Videos, {
-    foreignKey: 'user_id',
-    onDelete: 'CASCADE',
-});
+// User.hasMany(Videos, {
+//     foreignKey: 'user_id',
+//     onDelete: 'CASCADE',
+// });
 
-Notes.belongsTo(User, {
-    foreignKey: 'user_id'
-});
+// Notes.belongsTo(User, {
+//     foreignKey: 'user_id'
+// });
 
-User.hasMany(Notes, {
-    foreignKey: 'user_id',
-    onDelete: 'CASCADE',
-});
+// User.hasMany(Notes, {
+//     foreignKey: 'user_id',
+//     onDelete: 'CASCADE',
+// });
 
 Videos.belongsTo(Hobby, {
     foreignKey: 'hobby_id'
@@ -40,11 +40,11 @@ Hobby.hasMany(Videos, {
 });
 
 Notes.belongsTo(Videos, {
-    foreignKey: 'video_id'
+    foreignKey: 'videos_id'
 });
 
 Videos.hasMany(Notes, {
-    foreignKey: 'video_id',
+    foreignKey: 'videos_id',
     onDelete: 'CASCADE',
 });
 
