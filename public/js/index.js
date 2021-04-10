@@ -236,25 +236,21 @@ response.snippet.description,
 response.snippet.thumbnails.standard(or let it default)
 response.snippet.thumbnails.url*/
 
-displayVideos = (hobbyVideos) =>{
+// displayVideos = (hobbyVideos) =>{
+// move to utils
+// /* trying to put the response objects into separate arrays to be looped through and rendered. 
+// maybe for each hobbyVideos grab specific keys then render them in a particular html element by id
+// */
+// const videos = []
+// videos.push(hobbyVideos)
+// console.log(videos)
+// // need loop through videos and create html elements to contain specified elements of each object. 
+// for (var i = 0; i < videos.length; i++){
 
-/* trying to put the response objects into separate arrays to be looped through and rendered. 
-maybe for each hobbyVideos grab specific keys then render them in a particular html element by id
-*/
-const videos = []
-videos.push(hobbyVideos)
-console.log(videos)
-// need loop through videos and create html elements to contain specified elements of each object. 
-for (var i = 0; i < videos.length; i++){
+// }
 
-
-
-
-
-
-}
+// }
 
 
-
-}
-
+// video save button that triggers a backend POST route to save videos to a hobby and user req.body should include
+// title, url, thumbnail, 
