@@ -16,13 +16,7 @@ Videos.init(
             autoIncrement: true,
             allowNull: false,
         },
-        // user_id: {
-        //     type: DataTypes.INTEGER,
-        //     references: {
-        //         model: 'user',
-        //         key: 'id',
-        //     },
-        // },
+        
         title: {
             type: DataTypes.STRING,
         },
@@ -41,8 +35,9 @@ Videos.init(
             type: DataTypes.STRING,
             // url: DataTypes.STRING,
         },
+        
         hobby_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             references: {
                 model: 'hobby',
                 key: 'id',
