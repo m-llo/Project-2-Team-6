@@ -1,11 +1,11 @@
-const { Model, DataTypes, DATE } = require('sequelize');
-const bcrypt = require('bcrypt');
+const { Model, DataTypes, } = require('sequelize');
+// const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection.js');
 
 class Videos extends Model {
-    checkPassword(loginPw) {
-        return bcrypt.compareSync(loginPw, this.password);
-    }
+    // checkPassword(loginPw) {
+    //     return bcrypt.compareSync(loginPw, this.password);
+    // }
 }
 
 Videos.init(
@@ -16,13 +16,13 @@ Videos.init(
             autoIncrement: true,
             allowNull: false,
         },
-        user_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'user',
-                key: 'id',
-            },
-        },
+        // user_id: {
+        //     type: DataTypes.INTEGER,
+        //     references: {
+        //         model: 'user',
+        //         key: 'id',
+        //     },
+        // },
         title: {
             type: DataTypes.STRING,
         },
@@ -41,10 +41,10 @@ Videos.init(
             type: DataTypes.STRING,
             // url: DataTypes.STRING,
         },
-        notes_id: {
+        hobby_id: {
             type: DataTypes.STRING,
             references: {
-                model: 'notes',
+                model: 'hobby',
                 key: 'id',
             },
         },
@@ -54,7 +54,7 @@ Videos.init(
         timestamps: false,
         freezeTableName: true,
         underscore: true,
-        modelName: 'notes',
+        modelName: 'videos',
     }
 );
 

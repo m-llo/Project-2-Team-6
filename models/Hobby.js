@@ -1,4 +1,4 @@
-const { DefaultSerializer } = require('node:v8');
+// const { DefaultSerializer } = require('node:v8');
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
