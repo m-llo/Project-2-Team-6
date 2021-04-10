@@ -32,4 +32,16 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/notes/:id', withAuth, async(req, res)=>{
+  try{
+      const dbNotesData=await Notes.findByPk(req.params.id);
+      const notes = dbNotesData.get({plain:true});
+      res.render('videoView', { notes, loggedIn: req.session.loggedIn });
+  } catch (err){
+      console.log(err);
+      res.status(500).json(err);
+  }
+});
+
+
 module.exports = router;
