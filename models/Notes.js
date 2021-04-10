@@ -20,7 +20,7 @@ Notes.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        body: {
+        text: {
             type: DataTypes.STRING,
             allowNull: false,
         },
