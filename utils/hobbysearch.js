@@ -2,9 +2,9 @@ const hobbySearch =  (hobby) =>{
     const ytApiKey = 'AIzaSyChSlx47AsnYWpyeqc12NWX-llOKZTQjzI'
     const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
  // must include literal with keywords spaced with '+' inbetween these two parts
-    const tailrequestURL = '&type=video&videoCaption=closedCaption&key='
+    const tailrequestURL = '&type=video&maxResults=5&videoCaption=closedCaption&key='
  // must include ytApiKey literal
-    const keywords = hobby;
+    const keywords = hobby.tolowercase();
     console.log(keywords)
     const keywordArr = keywords.split(" ")
     console.log(keywordArr)
