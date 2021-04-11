@@ -4,7 +4,7 @@ const savedVideoSearch =  (videoId) =>{
     const ytApiKey = 'AIzaSyChSlx47AsnYWpyeqc12NWX-llOKZTQjzI'
     const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
  // must include literal with keywords spaced with '+' inbetween these two parts
-    const tailrequestURL = '&type=video&maxResults=5&videoCaption=closedCaption&key='
+    const tailrequestURL = '&type=video&maxResults=10&videoCaption=closedCaption&key='
  // must include ytApiKey literal
     const YTID = videoId;
     const videoSearch = `${baserequestURL}${YTID}${tailrequestURL}${ytApiKey}`
