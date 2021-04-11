@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { Videos } = require('../../models');
 const withAuth = require('../../utils/auth');
-const withAuth = require('../../utils/auth');
 const {savedVideoSearch, newVideoSearch} = require('../../utils/videosearch');
 
 
