@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { Where } = require('sequelize/types/lib/utils');
 const { Hobby, User, Videos, Notes } = require('../../models');
 const withAuth = require('../../utils/auth');
 const hobbySearch = require('../../utils/hobbysearch');
