@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Notes } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/notes/:id', withAuth, async(req, res)=>{
+router.get('/:id', withAuth, async(req, res)=>{
     try{
         const dbNotesData=await Notes.findByPk(req.params.id);
         const notes = dbNotesData.get({plain:true});
@@ -13,7 +13,28 @@ router.get('/notes/:id', withAuth, async(req, res)=>{
     }
 });
 
-router.put('/notes/:id', async(req, res) => {
+// CREATE new Notes
+router.post('/', async (req, res) => {
+  try {
+    const dbNotesData = await User.create({
+      title: req.body.title,
+      text: req.body.text,
+      
+    });
+
+    req.session.save(() => {
+      req.session.loggedIn = true;
+
+      res.status(200).json(dbNotesData);
+      
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+router.put('/:id', async(req, res) => {
     // update a category by its `id` value
     Notes.update(
       {
@@ -37,7 +58,7 @@ router.put('/notes/:id', async(req, res) => {
     });
   });
 
-  router.delete('/notes/:id', async (req, res) => {
+  router.delete('/:id', async (req, res) => {
     try {
       const dbNotesData = await Posts.destroy({
         where: {
