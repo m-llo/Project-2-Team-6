@@ -180,12 +180,12 @@ if (window.location.pathname === '/notes') {
 
 getAndRenderNotes();
 
-
+// Hobby routes ----------------------------------------------------------------------
 const postHobby = async (event) => {
     event.preventDefault();
     const hobbyName = document.querySelector('#hobbyName').value.trim();
     try{
-      const response = await fetch('/api/new', {
+      const response = await fetch('/api/dashboard/new/hobby', {
         method: 'POST',
         body: JSON.stringify({hobbyName}),
         headers: { 'Content-Type': 'application/json' },
@@ -193,64 +193,157 @@ const postHobby = async (event) => {
       if (response.ok) {
         document.location.replace('/');
       } else {
-        alert('Failed to log in');
+        alert('Failed to save hobby');
       }
     }catch(error){
         res.status(400)
     }
   };
 
-  const youtubeSearch =  (event) =>{
-    event.preventDefault();
-    const ytApiKey = 'AIzaSyChSlx47AsnYWpyeqc12NWX-llOKZTQjzI'
-    const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
- // must include literal with keywords spaced with '+' inbetween these two parts
-    const tailrequestURL = '&type=video&videoCaption=closedCaption&key='
- // must include ytApiKey literal
-    const keywords = document.querySelector('#keywords').value.trim();
-    console.log(keywords)
-    const keywordArr = keywords.split(" ")
-    console.log(keywordArr)
-    const keywordSearch = keywordArr.join('+')
-
-    const hobbySearch = `${baserequestURL}${keywordSearch}${tailrequestURL}${ytApiKey}`
-    console.log(hobbySearch)
-
-fetch(hobbySearch)
-    .then(function (response){ 
-        if (response.ok) {
-        console.log(response)
-        response.json().then(function (hobbyVideos) {
-            console.log(hobbyVideos)
-            displayVideos(hobbyVideos)
-            return hobbyVideos;
-        })
+  const deleteHobby = async () => {
+    const hobbyId = document.querySelector('.hobbyId');
+    try{
+      const response = await fetch('/api/dashboard/delete', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          id:  hobbyId
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });if (response.ok) {
+        res.status(200);
+        alert("Hobby succesffully deleted from playlist.")
+        document.location.replace('/');
+      } else {
+        alert('Failed to delete hobby');
+      }
+    }catch(error){
+        res.status(400)
     }
-  })
-}
-
-/*Need to pull from hobbyData 
-response.id.videoId to return unique video identifier, 
-response.snippet.title for the video title, 
-response.snippet.description, 
-response.snippet.thumbnails.standard(or let it default)
-response.snippet.thumbnails.url*/
-
-// displayVideos = (hobbyVideos) =>{
-// move to utils
-// /* trying to put the response objects into separate arrays to be looped through and rendered. 
-// maybe for each hobbyVideos grab specific keys then render them in a particular html element by id
-// */
-// const videos = []
-// videos.push(hobbyVideos)
-// console.log(videos)
-// // need loop through videos and create html elements to contain specified elements of each object. 
-// for (var i = 0; i < videos.length; i++){
-
-// }
-
-// }
+  };
 
 
-// video save button that triggers a backend POST route to save videos to a hobby and user req.body should include
-// title, url, thumbnail, 
+// Videos routes ------------------------------------------------- 
+  const postVideo = async () => {
+    const videoTitle = document.querySelector('.videoCardTitle');
+    const videoThumbnail = document.querySelector('.videoCardThumbnail');
+    const videoDescription = document.querySelector('.videoCardDesc');
+    const videoURL = document.querySelector('.videoCardURL');
+    const videoYTID = document.querySelector('.videoCardYTID');
+    const hobbyName = document.querySelector('#hobbyName').value.trim();
+    
+    try{
+     const getHobbyId = await fetch (`/api/dashboard/gethobby/${hobbyName}`)
+      const response = await fetch('/api/videos/save', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: videoTitle,
+          youtube_id: videoYTID,
+          URL: videoURL,
+          thumbnail: videoThumbnail,
+          description: videoDescription,
+          hobby_id: getHobbyId
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        document.location.replace('/');
+      } else {
+        alert('Failed to save video');
+      }
+    }catch(error){
+        res.status(400)
+    }
+  };
+
+  const getNewVideos = async () => {
+    const hobbyName = document.querySelector('#hobbyName').value.trim();
+    
+    try{
+      const response = await fetch('/api/videos/', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: hobbyName
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }catch(error){
+        res.status(400)
+    }
+  };
+
+  const deleteVideo = async () => {
+    const ytVideoId = document.querySelector('.savedvideoCardID');
+    try{
+      const response = await fetch('/api/videos/delete', {
+        method: 'DELETE',
+        body: JSON.stringify({
+          id:  ytVideoId
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });if (response.ok) {
+        res.status(200);
+        alert("Video succesffully deleted from playlist.")
+        document.location.replace('/');
+      } else {
+        alert('Failed to delete video from playlist');
+      }
+    }catch(error){
+        res.status(400)
+    }
+  };
+
+
+  const viewSavedVideo = async () => {
+    const ytVideoId = document.querySelector('.savedvideoCardID');
+    
+    try{
+      const response = await fetch('/api/videos/view', {
+        method: 'GET',
+        body: JSON.stringify({
+          id: ytVideoId
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }catch(error){
+        res.status(400)
+    }
+  };
+
+  const getHobbyPlaylist = async () => {
+    const hobbyName = document.querySelector('.savedHobbyName').value.trim();
+    try{
+      const response = await fetch(`/api/videos/view/playlist`, {
+        method: 'GET',
+        body: JSON.stringify({
+          name: hobbyName
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }catch(error){
+        res.status(400)
+    }
+  };
+
+  document
+    .querySelector('.savedHobbyName')
+    .addEventListener('click', getHobbyPlaylist);
+
+  document
+    .querySelector('.newHobbyForm')
+    .addEventListener('submit', postHobby, getNewVideos);
+
+    document
+    .querySelector('.videoCardBody')
+    .addEventListener('submit', postVideo);
+    
+    document
+    .querySelector('.videoCardBody')
+    .addEventListener('delete', deleteVideo);
+
+    document
+    .querySelector('.deleteHobby')
+    .addEventListener('delete', deleteHobby);
+
+    document
+    .querySelector('.savedVidView')
+    .addEventListener('submit', viewSavedVideo);
