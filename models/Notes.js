@@ -31,7 +31,7 @@ Notes.init(
         //         key: 'id',
         //     },
         // },
-        video_id: {
+        videos_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'videos',

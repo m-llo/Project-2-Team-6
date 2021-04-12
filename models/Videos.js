@@ -42,7 +42,7 @@ Videos.init(
             // url: DataTypes.STRING,
         },
         hobby_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             references: {
                 model: 'hobby',
                 key: 'id',

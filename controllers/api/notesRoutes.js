@@ -1,17 +1,48 @@
 const router = require('express').Router();
-const { Notes } = require('../../models');
+const { response } = require('express');
+const { Notes, User, Hobby, Videos } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-router.get('/:id', withAuth, async(req, res)=>{
-    try{
-        const dbNotesData=await Notes.findByPk(req.params.id);
-        const notes = dbNotesData.get({plain:true});
-        res.render('videoView', { notes, loggedIn: req.session.loggedIn });
-    } catch (err){
-        console.log(err);
-        res.status(500).json(err);
-    }
+router.get('/:id', async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const dbUserData = await User.findAll({
+      id: req.params.id,
+      include: [
+        
+        {
+          model: Hobby,
+          attributes:['id', 'name', 'user_id']
+        },
+        {
+          model: Videos,
+          attributes: ['id', 'title', 'youtube_id', 'URL', 'thumbnail', 'description'],
+        },
+        {
+          model:Notes,
+          attributes:['id', 'title', 'text' ]
+        }
+
+      ],
+    });
+
+    const user = dbUserData.map((user) =>
+    user.get({ plain: true })
+    );
+
+    res.render('videoView', {
+      user,
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+  res.send('Hello');
 });
+
+
+
 
 // CREATE new Notes
 router.post('/', async (req, res) => {

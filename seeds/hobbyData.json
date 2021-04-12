@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Art",
+    "user_id": 3
+    
+  },
+  {
+    "name": "Crafts",
+    "user_id": 3
+  },
+  {
+    "name": "Embroidery",
+    "user_id": 3
+  },
+  {
+    "name": "Bowling",
+    "user_id": 1
+  },
+  {
+    "name": "Boating",
+    "user_id": 1
+  },
+  {
+    "name": "Cake Decorating",
+    "user_id": 2
+  }
+]
