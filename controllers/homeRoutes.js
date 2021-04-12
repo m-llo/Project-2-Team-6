@@ -22,13 +22,14 @@ router.get('/', withAuth, async (req, res) => {
 });
 
 
-router.get('/', (req, res) => {
+router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
+  console.log ("hi")
   if (req.session.logged_in) {
     res.redirect('/dashboard');
     return;
   }
-
+  console.log("login route");
   res.render('login');
 });
 
