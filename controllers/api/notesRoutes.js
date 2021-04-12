@@ -1,17 +1,24 @@
 const router = require('express').Router();
-const { Notes } = require('../../models');
+const { response } = require('express');
+const { Notes, User, Hobby, Videos } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+
+
 router.get('/:id', withAuth, async(req, res)=>{
-    try{
-        const dbNotesData=await Notes.findByPk(req.params.id);
-        const notes = dbNotesData.get({plain:true});
-        res.render('videoView', { notes, loggedIn: req.session.loggedIn });
-    } catch (err){
-        console.log(err);
-        res.status(500).json(err);
-    }
+  try{
+      const dbNotesData=await Notes.findByPk(req.params.id);
+      const notes = dbNotesData.get({plain:true});
+      res.render('videoView', { notes, loggedIn: req.session.loggedIn });
+  } catch (err){
+      console.log(err);
+      res.status(500).json(err);
+  }
 });
+
+
+
+
 
 // CREATE new Notes
 router.post('/', async (req, res) => {
@@ -72,6 +79,7 @@ router.put('/:id', async(req, res) => {
         return;
       }
   
+      
       res.status(200).json(dbNotesData);
     } catch (err) {
       res.status(500).json(err);
