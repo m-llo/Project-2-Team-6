@@ -33,44 +33,62 @@ router.get('/', (req, res) => {
   res.render('login');
 });
 
-router.get('/notes/:id', withAuth, async(req, res)=>{
-  try{
-      const dbNotesData=await Notes.findByPk(req.params.id);
-      const notes = dbNotesData.get({plain:true});
-      res.render('videoView', { notes, loggedIn: req.session.loggedIn });
-  } catch (err){
-      console.log(err);
+router.get('/videos/:id', withAuth, async (req, res) => {
+    try {
+        const dbVideoData = await Videos.findByPk(req.params.id,{
+          include:[
+            {
+              model:Notes,
+              attributes:['id', 'title', 'text' ]
+            }
+        ],
+        });
+        const NotesList = dbVideoData.get({ plain: true });
+            res.render('videoView', { NotesList, loggedIn: req.session.loggedIn });
+    
+    
+      }catch (err) {
+        console.log(err); 
       res.status(500).json(err);
-  }
-});
+    }
+  });
 
-// GET all Notes for videoView
-router.get('/notes/:id', async (req, res) => {
+router.get('/', async (req, res) => {
+  // console.log(req.params.id);
   try {
     const dbUserData = await User.findAll({
-      id: req.params.id,
+     
+      
+      
+      
       include: [
         
         {
           model: Hobby,
-          attributes:['id', 'name', 'user_id']
+          attributes:['id', 'name', 'user_id'],
+          include:[
+            {
+              model: Videos,
+              attributes: ['id', 'title', 'youtube_id', 'URL', 'thumbnail', 'description'],
+              include:[
+                {
+                  model:Notes,
+                  attributes:['id', 'title', 'text' ]
+                }
+              ]
+            },
+          ]
         },
-        {
-          model: Videos,
-          attributes: ['id', 'title', 'youtube_id', 'URL', 'thumbnail', 'description'],
-        },
-        {
-          model:Notes,
-          attributes:['id', 'title', 'text' ]
-        }
+        
+        
 
       ],
     });
-
+    console.log (user);
     const user = dbUserData.map((user) =>
     user.get({ plain: true })
     );
-
+   
     res.render('videoView', {
       user,
       loggedIn: req.session.loggedIn,
@@ -79,6 +97,7 @@ router.get('/notes/:id', async (req, res) => {
     console.log(err);
     res.status(500).json(err);
   }
+  res.send('Hello');
 });
 
 

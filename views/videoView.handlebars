@@ -9,7 +9,7 @@
 
 
         <ul class="nav flex-column" id="myNotes">
-          {{#each Notes as |note|}}
+          {{#each NotesList as |note|}}
           <li class="list-group-item"><span>{{note.title}}</span></li>
 
           {{/each}}
@@ -40,10 +40,10 @@
         <h1 class="h2">Add new note</h1>
         {{!-- form to create a new notes --}}
 
-        <form class="form Notes-form">
-          <input class="note-title" placeholder="Note Title" maxlength="28" type="text">
-          <textarea class="note-textarea" placeholder="Note Text"></textarea>
-          <button class="btn btn-primary" type="submit">Save</button>
+        <form class="new-notes-form">
+          <input id="title" placeholder="Note Title" maxlength="28" type="text">
+          <textarea id="text" placeholder="Note Text"></textarea>
+          <button id="btn btn-primary" type="submit">Save</button>
         </form>
 
       </div>
