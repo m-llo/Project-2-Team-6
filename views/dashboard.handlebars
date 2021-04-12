@@ -1,53 +1,89 @@
 <div class="container-fluid">
   <div class="row">
     <nav id="savedHobbies" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+     
+     <div class="position-sticky pt-3">
+         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>My Hobbies</span>
+         </h6>
+            <ul class="nav flex-column saved-Hobbies" id="myHobbies">
+        {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies --}}
+        {{#each hobbies as |hobby|}}
+         <li class="nav-item">
+           <p hidden class="hobbyId">{{{hobby.id}}}</p>
+            <a class="nav-link active savedHobbyName" aria-current="page" href="#">
 
-      <div class="position-sticky pt-3">
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>My Hobbies</span>
-        </h6>
-        <ul class="nav flex-column" id="myHobbies">
-          {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies
-          --}}
-          {{#each hobbies as |hobby|}}
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
               <span data-feather="home"></span>
-              {{{hobby.name}}}
+              <h3>{{{hobby.name}}}</h3>
             </a>
+            <button class="btn btn-danger deleteHobby" type="delete">Delete</button>
           </li>
-          {{/each}}
-          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Favorite videos</span>
-          </h6>
-          <ul class="nav flex-column mb-2" id="favVids">
-            {{!-- loop li for each saved video --}}
-            {{#each videos as |video|}}
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">
-                <span data-feather="home"></span>
-                {{{video.video_title}}}
-              </a>
-            </li>
-            {{/each}}
-          </ul>
-      </div>
+        {{/each}}
+     </ul>
     </nav>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="mainDisplay">
+           <h1>Hobby Playlist</h1>
+           <h3>Select a saved hobby from "My Hobbies" to view saved videos here:</h3>
+          {{#each playlist as |video|}}
+           {{!-- populates with videos related to selected hobby #each making a card for videos returned from YT 
+           response.id.videoId to return unique video identifier, 
+                 response.snippet.title for the video title, 
+                response.snippet.description, 
+                   response.snippet.thumbnails.standard(or let it default)
+                     response.snippet.thumbnails.url*/--}}
+           <div class='col-auto card text-white bg-primary m-2' style='width: 12rem;'>
+              <div class='videoCardBody'>
+                  <div class="savedvideoCardThumbnail">{{video.thumbnail}}</div>
+                  <h5 class="savedvideoCardTitle text-center">{{video.title}}</h5>
+                  <h6 class="savedvideoCardDesc">{{video.description}}</h6>
+                  <h6 class="savedvideoCardURL">{{video.url}}</h6>
+                  <h6 class="savedvideoCardYTID">{{video.youtube_id}}</h6>
+                  <button class="btn btn-secondary savedVidView" type="submit">View</button>
+                  <button class="btn btn-danger deleteVid" type="delete">Delete</button>
+             </div>
+           </div>
+          {{/each}}
+        </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"id="newHobby">
+          <h1 class="h2">Add a new hobby</h1>
+          {{!-- form to create a new hobby with submit button that triggers Youtube api data pull and a place to render searched
+          videos and posts hobby to data base --}}
+          <div class="newHobbyForm form" style="width: 26rem">
+            <form class="form">
+              <div class="mb-3">
+                <label for="newHobbyCreateandSave" class="form-label">Enter a topic your are interested in.</label>
+                <input class="form-control form-control-lg" type="text" id="hobby-name" aria-describedby="eHelp" />
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="mainDisplay">
+           <h1>Top Videos</h1>
+           <h3>Save videos to the hobby playlist first, then view videos from your playlist.</h3>
+          {{#each ytvideos as |video|}}
+           {{!-- populates with videos related to selected hobby #each making a card for videos returned from YT 
+           response.id.videoId to return unique video identifier, 
+                 response.snippet.title for the video title, 
+                response.snippet.description, 
+                   response.snippet.thumbnails.standard(or let it default)
+                     response.snippet.thumbnails.url*/--}}
+           <div class='col-auto card text-white bg-primary m-2' style='width: 12rem;'>
+              <div class='videoCardBody'>
+                  <div class="videoCardThumbnail">{{video.snippet.thumbnail.standard}}</div>
+                  <h5 class="videoCardTitle text-center">{{video.snippet.title}}</h5>
+                  <h6 class="videoCardDesc">{{video.snippet.description}}</h6>
+                  <h6 class="videoCardURL">{{video.snippet.url}}</h6>
+                  <h6 class="videoCardYTID">{{video.id.videoId}}</h6>
+                  <button class="btn btn-secondary newVidSave" type="submit">Save</button>
+             </div>
+           </div>
+          {{/each}}
+        </div>
 
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-        id="newHobby">
-        <h1 class="h2">Add a new hobby</h1>
-        {{!-- form to create a new hobby with submit button that triggers Youtube api data pull and a place to render
-        searched videos and posts hobby to data base --}}
-      </div>
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-        id="mainDisplay">
-        <h1 class="h2">Top Videos</h1>
-        {{!-- populates with videos related to selected hobby #each making a card for videos returned from YT --}}
-      </div>
     </main>
   </div>
 </div>

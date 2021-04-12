@@ -4,6 +4,8 @@ const { User, Hobby } = require('../models');
 const userData = require('./userData.json');
 const hobbyData = require('./hobbyData.json');
 
+
+
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/m-llo/Project-2-Team-6#readme",
   "dependencies": {
+    "@types/sequelize": "github:types/sequelize",
     "bcrypt": "^5.0.1",
     "canvas": "^2.7.0",
     "connect-session-sequelize": "^7.1.1",
