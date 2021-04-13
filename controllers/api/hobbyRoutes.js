@@ -17,7 +17,8 @@ router.post('/new/hobby', withAuth, async (req, res) => {
        
      const hobbyData = hobbySearch(hobby)
         // push hobbydata to an array called newHobbyInfo to allow us to grab what we want.and post to handlebars 
-     res.render('dashboard', { hobbies, loggedIn: req.session.loggedIn });
+     res.render('dashboard', { hobbies, loggedIn: req.session.loggedIn })
+        res.status(500).json(err);
     //  handlebars renders cards for each video so the user can choose a video to view
     } catch (err) {
         res.status(400).json(err);
@@ -31,18 +32,13 @@ router.get('/', withAuth, async (req, res) => {
 
         include:[
              {
-                model: Hobby,
-                attributes:[
-                    'name',
-                    'id'
-                ]
+                model: Hobby
              }
         ]
       })
-    // need to figureout how to make sure this is searching by user_id and not hobby_id
     const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
-
-    res.render('dashboard', { hobbies, loggedIn: req.session.loggedIn });
+    console.log('hobbies', hobbies)
+    res.render('dashboard', { hobbies });
       }catch (err) {
       res.status(500).json(err);
     }

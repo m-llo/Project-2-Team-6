@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { response } = require('express');
+// const { response } = require('express');
 const { Notes, User, Hobby, Videos } = require('../../models');
 const withAuth = require('../../utils/auth');
 

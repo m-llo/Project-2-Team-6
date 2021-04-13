@@ -10,12 +10,12 @@ const loginFormHandler = async (event) => {
         body: JSON.stringify({ email, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-  
-      if (response.ok) {
-        document.location.replace('/api/dashboard');
-      } else {
-        alert('Failed to log in');
-      }
+      // if (response.ok) {
+      //   document.location.replace('/api/dashboard');
+      // } 
+    }
+    else {
+      alert('Please enter an email address and password');
     }
   };
   const signupFormHandler = async (event) => {
@@ -32,12 +32,12 @@ const loginFormHandler = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
   
-      if (response.ok) {
-        alert('Account successfully created. Please log in to continue')
-        document.location.replace('/');
-      } else {
-        alert('Failed to sign up.');
-      }
+      // if (response.ok) {
+      //   alert('Account successfully created. Please log in to continue')
+      //   document.location.replace('/');
+      // } 
+    }else {
+      alert('Please enter a valid username, email address, and password');
     }
   };
   

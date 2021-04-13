@@ -1,104 +1,18 @@
 const router = require('express').Router();
-const { User, Notes, Videos, Hobby } = require('../models');
-const withAuth = require('../utils/auth');
 
-
-router.get('/', withAuth, async (req, res) => {
-  try {
-    const userData = await User.findAll({
-      attributes: { exclude: ['password'] },
-      order: [['username', 'ASC']],
-    });
-
-    const users = userData.map((hobby) => hobby.get({ plain: true }));
-
-    res.render('dashboard', {
-      users,
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-
-router.get('/login', (req, res) => {
-  // If a session exists, redirect the request to the homepage
-  console.log ("hi")
-  if (req.session.logged_in) {
-    res.redirect('/api/dashboard');
-    return;
-  }
-  console.log("login route");
-  res.render('login');
-});
-
-router.get('/videos/:id', withAuth, async (req, res) => {
-    try {
-        const dbVideoData = await Videos.findByPk(req.session.user_id,{
-          include:[
-            {
-              model:Notes,
-              attributes:['id', 'title', 'text' ]
-            }
-        ],
-        });
-        const NotesList = dbVideoData.get({ plain: true });
-            res.render('videoView', { NotesList, logged_in: req.session.logged_in });
-    
-    
-      }catch (err) {
-        console.log(err); 
-      res.status(500).json(err);
-    }
-  });
 
 router.get('/', async (req, res) => {
-  // console.log(req.params.id);
+  if (req.session.logged_in) {
+    // alert('Welcome back, you are currently signed in. Click OK to proceed to your dashboard.');    
+    res.redirect('/api/dashboard');
+        return;
+      }else{
   try {
-    const dbUserData = await User.findAll({
-     
-      
-      
-      
-      include: [
-        
-        {
-          model: Hobby,
-          attributes:['id', 'name', 'user_id'],
-          include:[
-            {
-              model: Videos,
-              attributes: ['id', 'title', 'youtube_id', 'URL', 'thumbnail', 'description'],
-              include:[
-                {
-                  model:Notes,
-                  attributes:['id', 'title', 'text' ]
-                }
-              ]
-            },
-          ]
-        },
-        
-        
-
-      ],
-    });
-    console.log (user);
-    const user = dbUserData.map((user) =>
-    user.get({ plain: true })
-    );
-   
-    res.render('videoView', {
-      user,
-      logged_in: req.session.logged_in,
-    });
+    res.render('login');
   } catch (err) {
+    res.status(500);
     console.log(err);
-    res.status(500).json(err);
-  }
-  res.send('Hello');
+  }}
 });
-
 
 module.exports = router;
