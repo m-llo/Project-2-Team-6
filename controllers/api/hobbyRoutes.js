@@ -8,16 +8,16 @@ const videoSearch = require('../../utils/videosearch');
 router.post('/new/hobby', withAuth, async (req, res) => {
     try {
         const newHobby = await Hobby.create({
-            ...req.body,
+            name: req.body,
             user_id: req.session.user_id,
         });
 
         res.status(200).json(newHobby);
-    const hobby= newHobby.name;
+    const hobbies = newHobby;
        
      const hobbyData = hobbySearch(hobby)
         // push hobbydata to an array called newHobbyInfo to allow us to grab what we want.and post to handlebars 
-     res.render('dashboard', { newHobbyInfo, loggedIn: req.session.loggedIn });
+     res.render('dashboard', { hobbies, loggedIn: req.session.loggedIn });
     //  handlebars renders cards for each video so the user can choose a video to view
     } catch (err) {
         res.status(400).json(err);
@@ -26,7 +26,9 @@ router.post('/new/hobby', withAuth, async (req, res) => {
 // populates all user related hobbies on the side of the screeen
 router.get('/', withAuth, async (req, res) => {
     try {
-      const hobbyData = await User.findByPk(req.params.id,{
+        console.log("params", req.params.id);
+        console.log("session", req.session.user_id);
+      const hobbyData = await User.findByPk(req.session.user_id,{
         include:[
              {
                 model: Hobby,
