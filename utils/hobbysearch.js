@@ -1,5 +1,5 @@
 const hobbySearch =  (hobby) =>{
-    const ytApiKey = 'AIzaSyChSlx47AsnYWpyeqc12NWX-llOKZTQjzI'
+    const ytApiKey = process.env.API_SECRET;
     const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
  // must include literal with keywords spaced with '+' inbetween these two parts
     const tailrequestURL = '&type=video&maxResults=5&videoCaption=closedCaption&key='
