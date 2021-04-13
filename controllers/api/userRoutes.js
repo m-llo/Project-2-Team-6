@@ -10,8 +10,7 @@ router.post('/', async (req, res) => {
     // req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      
-      res.status(200).json(userData);
+     
       // send confirmation email using NPM package nodemailer
       nodemailer.createTestAccount(async (err, account) => {
         // create reusable transporter object using the default SMTP transport
@@ -24,7 +23,6 @@ router.post('/', async (req, res) => {
                 pass: account.pass  // generated ethereal password
             }
         });
-    
       let info = await transporter.sendMail({
         from: '"CURATIO" <\'host@curatio.com\'>',
         to: "kay43540@gmail.com",
@@ -35,6 +33,9 @@ router.post('/', async (req, res) => {
       console.log("Message sent: %s", info.messageId);
       console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     });
+
+    res.status(200);
+    res.redirect('/api/dashboard');
   } catch (err) {
     // res.status(400).json(err);
     console.log(err);
@@ -61,12 +62,14 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    req.session.save(() => {
+    // req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
       
-      res.json({ user: userData, message: 'You are now logged in!' });
-    });
+      // res.json({ user: userData, message: 'You are now logged in!' });
+    // });
+    res.status(200);
+    res.redirect('/api/dashboard')
 
   } catch (err) {
     res.status(400).json(err);
@@ -80,7 +83,7 @@ router.post('/logout', (req, res) => {
     });
   } else {
     res.status(404).end();
-  }
+  }res.redirect('/')
 });
 
 module.exports = router;

@@ -33,4 +33,4 @@ Hobby.init(
       }
 );
 
-module.exports = Hobby;
+module.exports = Hobby
