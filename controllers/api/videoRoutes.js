@@ -13,7 +13,7 @@ router.get('/', withAuth, async (req) => {
     
     const ytvideos = getVideos.map((video) => video.get({ plain: true }));
     // take the repsonse from the videoSearch function
-    res.render('dashboard', { ytvideos, loggedIn: req.session.loggedIn });
+    res.render('dashboard', { ytvideos, logged_in: req.session.logged_in });
       }catch (err) {
       res.status(500).json(err);
     }
@@ -74,7 +74,7 @@ router.get('/view', withAuth, async (req) => {
 
   const ytVideo = getVideo.map((video) => video.get({ plain: true }));
     // take the repsonse from the videoSearch function
-    res.render('videoView', { ytVideo, loggedIn: req.session.loggedIn });
+    res.render('videoView', { ytVideo, logged_in: req.session.logged_in });
       }catch (err) {
       res.status(500).json(err);
     }
@@ -92,7 +92,7 @@ router.get('/view', withAuth, async (req) => {
     
     const playlist = videoData.map((videos) => videos.get({ plain: true }));
    
-    res.render('dashboard', { playlist, loggedIn: req.session.loggedIn });
+    res.render('dashboard', { playlist, logged_in: req.session.logged_in });
       }catch (err) {
       res.status(500).json(err);
     }
