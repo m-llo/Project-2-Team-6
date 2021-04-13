@@ -6,18 +6,18 @@ const {savedVideoSearch, newVideoSearch} = require('../../utils/videosearch');
 
 
 
-router.get('/', withAuth, async (req) => {
-    const hobby = req.body.name
-    try{
-        const getVideos = newVideoSearch(hobby)
+// router.get('/', withAuth, async (req) => {
+//     const hobby = req.body.name
+//     try{
+//         const getVideos = newVideoSearch(hobby)
     
-    const ytvideos = getVideos.map((video) => video.get({ plain: true }));
-    // take the repsonse from the videoSearch function
-    res.render('dashboard', { ytvideos, logged_in: req.session.logged_in });
-      }catch (err) {
-      res.status(500).json(err);
-    }
-  });
+//     const ytvideos = getVideos.map((video) => video.get({ plain: true }));
+//     // take the repsonse from the videoSearch function
+//     res.render('dashboard', { ytvideos, logged_in: req.session.logged_in });
+//       }catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
 
 
 router.post('/save', withAuth, async (req, res) => {

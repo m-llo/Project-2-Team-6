@@ -15,9 +15,9 @@ router.post('/new/hobby', withAuth, async (req, res) => {
         res.status(200).json(newHobby);
     const hobbies = newHobby;
        
-     const hobbyData = hobbySearch(hobby)
+     const ytVideos = hobbySearch(hobby)
         // push hobbydata to an array called newHobbyInfo to allow us to grab what we want.and post to handlebars 
-     res.render('dashboard', { hobbies, loggedIn: req.session.loggedIn })
+     res.render('dashboard', { hobbies, ytVideos, loggedIn: req.session.logged_in })
         res.status(500).json(err);
     //  handlebars renders cards for each video so the user can choose a video to view
     } catch (err) {
