@@ -10,8 +10,9 @@
         <div class="list-container">
           <div class="card">
             <ul class="nav flex-column list-group" id="myNotes">
-              {{#each notes as |notes|}}
-              <li class="list-group-item"><span>{{notes.title}}</span></li>
+
+              {{#each NotesList.notes as |notes|}}
+              <li class="list-group-item"><span>{{this.title}}</span></li>
 
               {{/each}}
             </ul>
@@ -66,5 +67,6 @@
 </div>
 
 
-<script src="/js/index.js"></script>
+{{!--
+<script src="/js/index.js"></script> --}}
 <script src="/js/videoView.js"></script>

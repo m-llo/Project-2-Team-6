@@ -32,8 +32,10 @@ router.get('/login', (req, res) => {
   console.log("login route");
   res.render('login');
 });
+// ,  withAuth
+// , loggedIn: req.session.loggedIn
 
-router.get('/Notes/:id',  withAuth, async (req, res) => {
+router.get('/Notes/:id', withAuth, async (req, res) => {
     try {
         const dbVideoData = await Videos.findByPk(req.params.id,{
           include:[
