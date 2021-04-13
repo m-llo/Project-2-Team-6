@@ -28,7 +28,8 @@
 
 // Hobby routes ----------------------------------------------------------------------
 const postHobby = async (event) => {
-    event.preventDefault();
+  console.log('saving hobby')  
+  event.preventDefault();
     const hobbyName = document.querySelector('#hobbyName').value.trim();
     try{
       const response = await fetch('/api/dashboard/new/hobby', {
