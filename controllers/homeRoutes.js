@@ -26,7 +26,7 @@ router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
   console.log ("hi")
   if (req.session.logged_in) {
-    res.redirect('/dashboard');
+    res.redirect('/api/dashboard');
     return;
   }
   console.log("login route");
