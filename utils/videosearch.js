@@ -1,7 +1,7 @@
-
+require('dotenv').config();
 // how to search by either url or unique video_id
+const ytApiKey = process.env.API_SECRET;
 const savedVideoSearch =  (videoId) =>{
-    const ytApiKey = 'AIzaSyChSlx47AsnYWpyeqc12NWX-llOKZTQjzI'
     const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
  // must include literal with keywords spaced with '+' inbetween these two parts
     const tailrequestURL = '&type=video&maxResults=10&videoCaption=closedCaption&key='
@@ -21,7 +21,6 @@ fetch(videoSearch)
 
 }
 const newVideoSearch =  (hobby) =>{
-    const ytApiKey = 'AIzaSyChSlx47AsnYWpyeqc12NWX-llOKZTQjzI'
     const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
  // must include literal with keywords spaced with '+' inbetween these two parts
     const tailrequestURL = '&type=video&maxResults=5&videoCaption=closedCaption&key='
