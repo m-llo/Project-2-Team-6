@@ -25,10 +25,10 @@ router.post('/new/hobby', withAuth, async (req, res) => {
 });
 // populates all user related hobbies on the side of the screeen
 router.get('/', withAuth, async (req, res) => {
+    console.log("hobby get route hit")
     try {
-        console.log("params", req.params.id);
-        console.log("session", req.session.user_id);
-      const hobbyData = await User.findByPk(req.session.user_id,{
+      const hobbyData = await User.findByPk(req.session.user_id, {
+
         include:[
              {
                 model: Hobby,

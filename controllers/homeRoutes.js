@@ -26,7 +26,7 @@ router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
   console.log ("hi")
   if (req.session.logged_in) {
-    res.redirect('/dashboard');
+    res.redirect('/api/dashboard');
     return;
   }
   console.log("login route");
@@ -35,7 +35,7 @@ router.get('/login', (req, res) => {
 
 router.get('/videos/:id', withAuth, async (req, res) => {
     try {
-        const dbVideoData = await Videos.findByPk(req.params.id,{
+        const dbVideoData = await Videos.findByPk(req.session.user_id,{
           include:[
             {
               model:Notes,
@@ -44,7 +44,7 @@ router.get('/videos/:id', withAuth, async (req, res) => {
         ],
         });
         const NotesList = dbVideoData.get({ plain: true });
-            res.render('videoView', { NotesList, loggedIn: req.session.loggedIn });
+            res.render('videoView', { NotesList, logged_in: req.session.logged_in });
     
     
       }catch (err) {
@@ -91,7 +91,7 @@ router.get('/', async (req, res) => {
    
     res.render('videoView', {
       user,
-      loggedIn: req.session.loggedIn,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     console.log(err);

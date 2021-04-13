@@ -7,9 +7,9 @@ const withAuth = require('../../utils/auth');
 
 router.get('/:id', withAuth, async(req, res)=>{
   try{
-      const dbNotesData=await Notes.findByPk(req.params.id);
+      const dbNotesData=await Notes.findByPk(req.session.user_id);
       const notes = dbNotesData.get({plain:true});
-      res.render('videoView', { notes, loggedIn: req.session.loggedIn });
+      res.render('videoView', { notes, logged_in: req.session.logged_in });
   } catch (err){
       console.log(err);
       res.status(500).json(err);
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     });
 
     req.session.save(() => {
-      req.session.loggedIn = true;
+      req.session.logged_in = true;
 
       res.status(200).json(dbNotesData);
       
@@ -53,7 +53,7 @@ router.put('/:id', async(req, res) => {
       {
         // Gets a book based on the book_id given in the request parameters
         where: {
-          id: req.params.id,
+          id: req.session.user_id,
         },
       }
     ) .then((updateNotes) => {
@@ -69,7 +69,7 @@ router.put('/:id', async(req, res) => {
     try {
       const dbNotesData = await Posts.destroy({
         where: {
-          id: req.params.id,
+          id: req.session.user_id,
           user_id: req.session.user_id,
         },
       });
