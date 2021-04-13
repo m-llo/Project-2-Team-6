@@ -7,12 +7,17 @@
         </h6>
 
 
-        <ul class="nav flex-column" id="myNotes">
-          {{#each NotesList as |note|}}
-          <li class="list-group-item"><span>{{note.title}}</span></li>
+        <div class="list-container">
+          <div class="card">
+            <ul class="nav flex-column list-group" id="myNotes">
+              {{#each notes as |notes|}}
+              <li class="list-group-item"><span>{{notes.title}}</span></li>
 
-          {{/each}}
-        </ul>
+              {{/each}}
+            </ul>
+          </div>
+        </div>
+
         {{!-- to do: loop through saved notes and create li's for each --}}
         {{!-- sample li
         <li class="nav-item">
@@ -38,17 +43,26 @@
         id="newNote">
         <h1 class="h2">Add new note</h1>
         {{!-- form to create a new notes --}}
-
-        <form class="new-notes-form">
-          <input id="title" placeholder="Note Title" maxlength="28" type="text">
-          <textarea id="text" placeholder="Note Text"></textarea>
-          <button id="btn btn-primary" type="submit">Save</button>
-        </form>
-
+        <i class="fas fa-pen text-light new-note"></i>
       </div>
+      <form class="new-notes-form">
+        <div class="form-group">
+          <input id="title" placeholder="Note Title" maxlength="28" type="text">
+        </div>
+        <div class="form-group">
+          <textarea id="text" placeholder="Note Text"></textarea>
+        </div>
 
-    </main>
+        <div class="form-group">
+          <button id="btn btn-primary" type="submit">Save</button>
+        </div>
+
+      </form>
+
   </div>
+
+  </main>
+</div>
 </div>
 
 
