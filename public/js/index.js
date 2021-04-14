@@ -27,15 +27,20 @@
 // document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);
 
 // Hobby routes ----------------------------------------------------------------------
-const getSavedHobbies = async () => {
+const getSavedHobbies = async (event) => {
+ console.log('Getting Saved Hobbies')
   try{
-    const response = await fetch('/myhobbies', {
+    const response = await fetch('/hobbies/', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-    });
-    console.log('Getting Hobbies ')
+    })
+    if (response.ok) {
+      return res.render('dashboard', { hobbies });
+    } else {
+      alert('Failed to render user hobbies');
+    }
   }catch(error){
-      res.status(400)
+     return res.status(400).json(error)
   }
 };
 
@@ -50,11 +55,12 @@ const postHobby = async (event) => {
         body: JSON.stringify({name: hobbyName}),
         headers: { 'Content-Type': 'application/json' },
       });
-      // if (response.ok) {
-      //   document.location.replace('/dashboard');
-      // } else {
-      //   alert('Failed to save hobby');
-      // }
+      if (response.ok) {
+        res.redirect('/dashboard')
+        // document.location.replace('/dashboard');
+      } else {
+        alert('Failed to save hobby');
+      }
     }catch(error){
         res.status(400)
     }
@@ -209,7 +215,11 @@ const postHobby = async (event) => {
 
   document
     .querySelector('.newHobbyForm')
-    .addEventListener('submit', postHobby, getNewVideos);
+    .addEventListener('submit', postHobby);
+
+    document
+    .querySelector('.newHobbyForm')
+    .addEventListener('submit', getNewVideos);
 
     document
     .querySelector('#playlistDisplay')

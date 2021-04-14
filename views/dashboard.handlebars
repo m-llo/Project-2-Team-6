@@ -8,17 +8,17 @@
          </h6>
          <p>Click Here to view your saved Hobbies</p>
          <button class="btn btn-secondary savedHobbyView" type="submit">View</button>
-            <ul class="nav flex-column saved-Hobbies" id="myHobbies">
+            <ul class="nav flex-column saved-Hobbies m-2" id="myHobbies">
         {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies --}}
-        {{#each arrayHobbies as |hobby|}}
+        {{#each hobbies as |hobby|}}
          <li class="nav-item">
            <p hidden class="hobbyId">{{{hobby.id}}}</p>
             <a class="nav-link active savedHobbyName" aria-current="page" href="#">
 
               <span data-feather="home"></span>
-              <h3>{{{hobby.name}}}</h3>
+              <h5>{{{hobby.name}}}</h5>
+              <button class="btn btn-danger deleteHobby" type="delete">Delete</button>
             </a>
-            <button class="btn btn-danger deleteHobby" type="delete">Delete</button>
           </li>
         {{/each}}
      </ul>

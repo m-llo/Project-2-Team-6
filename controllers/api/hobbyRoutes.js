@@ -15,15 +15,15 @@ router.post('/new/hobby', async (req, res) => {
 
         res.status(200).json(newHobby);
         console.log("new hobby added:", newHobby)
-    const hobby = newHobby.name;
-    console.log("searching for videos related to: ", hobby)
-    // const ytVideos = hobbySearch(hobby)
-    //  console.log(ytVideos)
+    // const hobby = newHobby.name;
+    // console.log("searching for videos related to: ", hobby)
+    // // const ytVideos = hobbySearch(hobby)
+    // //  console.log(ytVideos)
 
-    const allHobbies = await Hobby.findAll({where: {user_id: req.session.user_id}})
+    // const allHobbies = await Hobby.findAll({where: {user_id: req.session.user_id}})
 
-    const hobbies = allHobbies.get({ plain: true });
-       console.log(hobbies)
+    // const hobbies = allHobbies.get({ plain: true });
+    //    console.log(hobbies)
     //     // push hobbydata to an array called newHobbyInfo to allow us to grab what we want.and post to handlebars 
     //  res.render('dashboard', { hobbies, loggedIn: req.session.logged_in })
     //     res.status(500).json(err);
