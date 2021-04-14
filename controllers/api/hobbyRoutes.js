@@ -24,37 +24,37 @@ router.post('/new/hobby', withAuth, async (req, res) => {
         res.status(400).json(err);
     }
 });
-// populates all user related hobbies on the side of the screeen
-router.get('/', async (req, res) => {
-    console.log("hobby get route hit")
-    req.session.user_id=1
-    try {
-      const hobbyData = await User.findByPk(req.session.user_id, {
+// // populates all user related hobbies on the side of the screeen
+// router.get('/', async (req, res) => {
+//     console.log("hobby get route hit")
+//     req.session.user_id=1
+//     try {
+//       const hobbyData = await User.findByPk(req.session.user_id, {
 
-        include:[
-             {
-                model: Hobby,
-                attributes: ["id", "name", "user_id"]
-             }
-        ]
-      })
-      console.log("hobbyData 40", hobbyData);
-    const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
-    // const hobbies = hobbyData.get({ plain: true });
-    console.log('hobbies 43', JSON.stringify(hobbies.dataValues))
-    // console.log("hobby data[0]", hobbyData[0].hobbies[0])
-//     const arrayHobbies={
-//         hobbies: hobbyData.hobbies
-//    }
-//    console.log(arrayHobbies)
-//    res.render('dashboard', arrayHobbies);
-    res.render('dashboard', { hobbies });
-      }catch (err) {
-      res.json(err);
-    }
-  }
+//         include:[
+//              {
+//                 model: Hobby,
+//                 attributes: ["id", "name", "user_id"]
+//              }
+//         ]
+//       })
+//       console.log("hobbyData 40", hobbyData);
+//     const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
+//     // const hobbies = hobbyData.get({ plain: true });
+//     console.log('hobbies 43', JSON.stringify(hobbies.dataValues))
+//     // console.log("hobby data[0]", hobbyData[0].hobbies[0])
+// //     const arrayHobbies={
+// //         hobbies: hobbyData.hobbies
+// //    }
+// //    console.log(arrayHobbies)
+// //    res.render('dashboard', arrayHobbies);
+//     res.render('dashboard', { hobbies });
+//       }catch (err) {
+//       res.json(err);
+//     }
+//   }
   
-  );
+//   );
 
 // when user clicks delete button next to hobby on My hobbies
 router.delete('/delete/', withAuth, async (req, res) => {
