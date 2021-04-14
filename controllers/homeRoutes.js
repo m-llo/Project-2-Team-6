@@ -5,7 +5,7 @@ const router = require('express').Router();
 //const { Videos } = require('../models')
 const nodemailer = require('nodemailer');
 
-// const { Hobby, User, Videos, Notes } = require('../models');
+const { Hobby, User, Videos, Notes } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/login', async (req, res) => {
@@ -57,7 +57,7 @@ router.get('/', withAuth, async (req, res) => {
   try {
     const userData = await User.findAll({
       attributes: { exclude: ['password'] },
-      order: [['name', 'ASC']],
+      order: [['username', 'ASC']],
     });
 
     const users = userData.map((project) => project.get({ plain: true }));

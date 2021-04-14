@@ -64,16 +64,16 @@ router.post('/login', async (req, res) => {
       return;
     }
 
-    // req.session.save(() => {
+     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
       
-      // res.json({ user: userData, message: 'You are now logged in!' });
-    // });
-    res.status(200);
-    console.log("loginsuccess");
-    res.redirect('/dashboard')
-    return;
+       res.json({ user: userData, message: 'You are now logged in!' });
+     });
+    // res.status(200);
+    // console.log("loginsuccess");
+    // res.redirect('/dashboard')
+    // return;
 
   } catch (err) {
     res.status(400).json(err);
