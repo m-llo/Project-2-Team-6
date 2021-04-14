@@ -5,12 +5,13 @@ const { Notes } = require('../models')
 const { Videos } = require('../models')
 const nodemailer = require('nodemailer');
 
-const { Hobby, User, Videos, Notes } = require('../models');
+// const { Hobby, User, Videos, Notes } = require('../models');
 const withAuth = require('../utils/auth');
 
 router.get('/', async (req, res) => {
   try {
     res.render('login');
+    console.log('logged in?:', req.session.logged_in);
   } catch (err) {
     res.json(err);
     console.log(err);
@@ -58,6 +59,7 @@ router.get('/dashboard', async (req, res) => {
       
      
           res.render('dashboard');
+          console.log('logged in?:', req.session.logged_in);
   
   
     }catch (err) {
@@ -116,6 +118,7 @@ router.get('/dashboard', async (req, res) => {
   console.log("hobby get route hit")
   try {
   res.render('dashboard');
+  console.log('logged in?:', req.session.logged_in);
     }catch (err) {
     res.json(err);
   }

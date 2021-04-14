@@ -70,7 +70,8 @@ router.post('/login', async (req, res) => {
       // res.json({ user: userData, message: 'You are now logged in!' });
     // });
     res.status(200);
-    res.redirect('/api/dashboard')
+    console.log('logged in?:', req.session.logged_in);
+    res.redirect('/api/dashboard');
 
   } catch (err) {
     res.status(400).json(err);
@@ -80,12 +81,17 @@ router.post('/login', async (req, res) => {
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
+      console.log('logged in?:', req.session.logged_in);
       res.status(204).end();
+      
     });
   } else {
+    console.log('logged in?:', req.session.logged_in);
     res.status(404).end();
+    
   }
   res.status(200);
+  console.log('logged in?:', req.session.logged_in)
   // res.redirect('/')
 });
 
