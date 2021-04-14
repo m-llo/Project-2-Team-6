@@ -1,5 +1,4 @@
-// const { DefaultSerializer } = require('node:v8');
-const { Model, DataTypes } = require('sequelize');
+const { Model, Datatypes, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class Hobby extends Model {}
@@ -8,12 +7,12 @@ Hobby.init(
     {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allownull: false,
             primaryKey: true,
-            autoIncrememt: true,
+            autoIncrement: true,
         },
         name: {
-            type: DataTypes.STRING,
+            type: Datatypes.STRING,
             allowNull: false,
         },
         user_id: {
@@ -23,14 +22,14 @@ Hobby.init(
                 key: 'id',
             },
         },
-      },
-      {
-          sequelize,
-          timestamps: false,
-          freezeTableName: true,
-          underscored: true,
-          modelName: 'hobby',
-      }
+    },
+    {
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'hobby',
+    }
 );
 
 module.exports = Hobby
