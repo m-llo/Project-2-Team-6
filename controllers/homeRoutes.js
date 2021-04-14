@@ -5,16 +5,17 @@ const router = require('express').Router();
 //const { Videos } = require('../models')
 const nodemailer = require('nodemailer');
 
-const { Hobby, User, Videos, Notes } = require('../models');
+// const { Hobby, User, Videos, Notes } = require('../models');
 const withAuth = require('../utils/auth');
 
-router.get('/', async (req, res) => {
-  try {
+router.get('/login', async (req, res) => {
+    // If a session exists, redirect the request to the homepage
+    if (req.session.logged_in) {
+      res.redirect('/dashboard');
+      return;
+    }
+
     res.render('login');
-  } catch (err) {
-    res.json(err);
-    console.log(err);
-}
 });
 
     // //  populates all user related hobbies on the side of the screeen
@@ -51,13 +52,33 @@ router.get('/', async (req, res) => {
     //   );
 // , withAuth
 // , loggedIn: req.session.loggedIn
+// Prevent non logged in users from viewing the homepage
+router.get('/', withAuth, async (req, res) => {
+  try {
+    const userData = await User.findAll({
+      attributes: { exclude: ['password'] },
+      order: [['name', 'ASC']],
+    });
+
+    const users = userData.map((project) => project.get({ plain: true }));
+
+    res.render('dashboard', {
+      users,
+      // Pass the logged in flag to the template
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
-router.get('/dashboard', async (req, res) => {
+router.get('/dashboard',  withAuth, async (req, res) => {
+  console.log("dashboard");
   try {
       
      
-          res.render('dashboard');
+          res.render('dashboard',  {loggedIn: req.session.loggedIn});
   
   
     }catch (err) {
@@ -112,15 +133,7 @@ router.get('/Notes/:id', withAuth, async (req, res) => {
   }
 });
 
-router.get('/dashboard', async (req, res) => {
-  console.log("hobby get route hit")
-  try {
-  res.render('dashboard');
-    }catch (err) {
-    res.json(err);
-  }
-}
-);
+
 
 router.get('/myhobbies', async (req, res) => {
   console.log("hobby get route hit")

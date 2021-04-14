@@ -44,9 +44,10 @@ router.post('/', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   console.log("hi");
+  // console.log(res);
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
-
+    console.log(userData);
     if (!userData) {
       res
         .status(400)
@@ -70,7 +71,9 @@ router.post('/login', async (req, res) => {
       // res.json({ user: userData, message: 'You are now logged in!' });
     // });
     res.status(200);
-    res.redirect('/api/dashboard')
+    console.log("loginsuccess");
+    res.redirect('/dashboard')
+    return;
 
   } catch (err) {
     res.status(400).json(err);
