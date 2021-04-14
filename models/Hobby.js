@@ -12,7 +12,7 @@ Hobby.init(
             autoIncrement: true,
         },
         name: {
-            type: Datatypes.STRING,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         user_id: {
