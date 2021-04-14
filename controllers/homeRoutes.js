@@ -10,10 +10,11 @@ router.get('/', async (req, res) => {
   try {
     res.render('login');
   } catch (err) {
-    res.status(500);
+    res.json(err);
     console.log(err);
 //  }
 }
 });
+
 
 module.exports = router;
