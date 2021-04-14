@@ -151,23 +151,26 @@ router.get('/Notes/:id', withAuth, async (req, res) => {
   }
 });
 
+router.get('/playlist', async (req, res) => {
+  console.log("playlist");
+  try {
+    const hobbyName= req.body.name; 
+    console.log("getting videos for:", hobbyName) 
+    const videoData = await Videos.findAll({where: {hobby_id: req.body.id}});
+    console.log("VideoData", videoData);
+    const videos = videoData.map((video) => video.get({ plain: true }));
+    console.log(videos)
 
 
-// router.get('/hobbies/', async (req, res) => {
-//   console.log("hobby get route hit")
-//   try {
-//     const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
-//     console.log("hobbyData", hobbyData);
-//   const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
-//   // const hobbies = await hobbyData.get({ plain: true });
-//     // console.log("hobbies:", hobbies)
-//     res.render('dashboard', { hobbies });
-//     }catch (err) {
-//       console.log(err)
-//     return res.status(400).json(err);
-//   }
-// }
+          // res.render('playlist',  {hobbyName, loggedIn: req.session.loggedIn});
+          res.render('playlist',  {hobbyName, videos, loggedIn: req.session.loggedIn});
+  
+  
+    }catch (err) {
+      console.log(err); 
+    return res.status(500).json(err);
+  }
+});
 
-// );
 
 module.exports = router;
