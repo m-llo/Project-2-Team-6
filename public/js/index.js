@@ -42,18 +42,19 @@ const getSavedHobbies = async () => {
 const postHobby = async (event) => {
   console.log('saving hobby')  
   event.preventDefault();
-    const hobbyName = document.querySelector('#hobbyName').value.trim();
+    const hobbyName = document.querySelector('#hobby-name').value.trim();
+    console.log(hobbyName)
     try{
       const response = await fetch('/api/dashboard/new/hobby', {
         method: 'POST',
-        body: JSON.stringify({hobbyName}),
+        body: JSON.stringify({name: hobbyName}),
         headers: { 'Content-Type': 'application/json' },
       });
-      if (response.ok) {
-        document.location.replace('/');
-      } else {
-        alert('Failed to save hobby');
-      }
+      // if (response.ok) {
+      //   document.location.replace('/dashboard');
+      // } else {
+      //   alert('Failed to save hobby');
+      // }
     }catch(error){
         res.status(400)
     }
@@ -61,11 +62,14 @@ const postHobby = async (event) => {
 
   const deleteHobby = async () => {
     const hobbyId = document.querySelector('.hobbyId');
+    const user_id = req.sesson.user_id
+    console.log("deleting hobby: ", hobbyId, "where user_id: ", user_id)
     try{
       const response = await fetch('/api/dashboard/delete', {
         method: 'DELETE',
         body: JSON.stringify({
-          id:  hobbyId
+          id:  hobbyId ,
+          user_id: user_id
         }),
         headers: { 'Content-Type': 'application/json' },
       });if (response.ok) {
@@ -192,8 +196,12 @@ const postHobby = async (event) => {
   };
 
   document
-    .querySelector('.savedHobbyName')
-    .addEventListener('click', getHobbyPlaylist);
+    .querySelector('.saved-Hobbies')
+    .addEventListener('click', getHobbyPlaylist)
+
+    document
+    .querySelector('.saved-Hobbies')
+    .addEventListener('delete', deleteHobby);
 
     document
     .querySelector('.savedHobbyView')
@@ -204,17 +212,18 @@ const postHobby = async (event) => {
     .addEventListener('submit', postHobby, getNewVideos);
 
     document
-    .querySelector('.videoCardBody')
-    .addEventListener('submit', postVideo);
-    
+    .querySelector('#playlistDisplay')
+    .addEventListener('submit', viewSavedVideo)
+   
     document
-    .querySelector('.videoCardBody')
+    .querySelector('#playlistDisplay')
     .addEventListener('delete', deleteVideo);
+    
+
+    // document
+    // .querySelector('.deleteHobby')
+    // .addEventListener('delete', deleteHobby);
 
     document
-    .querySelector('.deleteHobby')
-    .addEventListener('delete', deleteHobby);
-
-    document
-    .querySelector('.savedVidView')
-    .addEventListener('submit', viewSavedVideo);
+    .querySelector('#videoSearchDisplay')
+    .addEventListener('submit', postVideo)
