@@ -1,8 +1,5 @@
 const router = require('express').Router();
-//const { User } = require('../models')
-const { Hobby } = require('../models')
-const { Notes } = require('../models')
-const { Videos } = require('../models')
+
 const nodemailer = require('nodemailer');
 
 const { Hobby, User, Videos, Notes } = require('../models');
@@ -11,12 +8,13 @@ const withAuth = require('../utils/auth');
 
 router.get('/login', async (req, res) => {
     // If a session exists, redirect the request to the homepage
-    if (req.session.logged_in) {
-      res.redirect('/dashboard');
-      return;
-    }
-
-    res.render('login');
+    try{
+      res.render('login');
+    }catch (err) {
+      console.log(err); 
+      return res.status(500).json(err);
+  }
+       
 });
 
     // //  populates all user related hobbies on the side of the screeen
@@ -54,24 +52,24 @@ router.get('/login', async (req, res) => {
 // , withAuth
 // , loggedIn: req.session.loggedIn
 // Prevent non logged in users from viewing the homepage
-router.get('/', withAuth, async (req, res) => {
-  try {
-    const userData = await User.findAll({
-      attributes: { exclude: ['password'] },
-      order: [['username', 'ASC']],
-    });
+// router.get('/', withAuth, async (req, res) => {
+//   try {
+//     const userData = await User.findAll({
+//       attributes: { exclude: ['password'] },
+//       order: [['username', 'ASC']],
+//     });
 
-    const users = userData.map((project) => project.get({ plain: true }));
+//     const users = userData.map((project) => project.get({ plain: true }));
 
-    res.render('dashboard', {
-      users,
-      // Pass the logged in flag to the template
-      logged_in: req.session.logged_in,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//     res.render('dashboard', {
+//       users,
+//       // Pass the logged in flag to the template
+//       logged_in: req.session.logged_in,
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 
 // router.get('/dashboard',  withAuth, async (req, res) => {
@@ -88,15 +86,20 @@ router.get('/', withAuth, async (req, res) => {
 //   }
 // });
 
-router.get('/dashboard', async (req, res) => {
+router.get('/', async (req, res) => {
+  if (!req.session.logged_in) {
+    res.redirect('/login');
+    return;
+  }
   console.log("dashboard");
   try {
       
     const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
     console.log("hobbyData", hobbyData);
     const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
-
-
+    
+    
+          
           res.render('dashboard',  { hobbies, loggedIn: req.session.loggedIn});
   
   

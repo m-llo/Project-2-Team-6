@@ -12,7 +12,7 @@ const loginFormHandler = async (event) => {
       });
       console.log(email && password);
       if (response.ok) {
-        document.location.replace('/dashboard');
+        document.location.replace('/');
       } 
     }
     else {
