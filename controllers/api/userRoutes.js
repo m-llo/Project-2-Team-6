@@ -82,6 +82,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
+  console.log('hitting logout post route');
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();
@@ -90,7 +91,6 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
   res.status(200);
-  // res.redirect('/')
 });
 
 module.exports = router;
