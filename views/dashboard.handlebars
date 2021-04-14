@@ -4,11 +4,13 @@
      
      <div class="position-sticky pt-3">
          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>My Hobbies</span>
+            <span>Saved Hobbies</span>
          </h6>
+         <p>Click Here to view your saved Hobbies</p>
+         <button class="btn btn-secondary savedHobbyView" type="submit">View</button>
             <ul class="nav flex-column saved-Hobbies" id="myHobbies">
         {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies --}}
-        {{#each hobbies as |hobby|}}
+        {{#each arrayHobbies as |hobby|}}
          <li class="nav-item">
            <p hidden class="hobbyId">{{{hobby.id}}}</p>
             <a class="nav-link active savedHobbyName" aria-current="page" href="#">

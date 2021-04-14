@@ -24,6 +24,7 @@ router.post('/new/hobby', withAuth, async (req, res) => {
         res.status(400).json(err);
     }
 });
+
 // // populates all user related hobbies on the side of the screeen
 // router.get('/', async (req, res) => {
 //     console.log("hobby get route hit")
