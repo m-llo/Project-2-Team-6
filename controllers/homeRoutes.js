@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { User } = require('../models')
-const { Hobby } = require('../models')
-const { Notes } = require('../models')
-const { Videos } = require('../models')
+//const { User } = require('../models')
+//const { Hobby } = require('../models')
+//const { Notes } = require('../models')
+//const { Videos } = require('../models')
 const nodemailer = require('nodemailer');
 
 // const { Hobby, User, Videos, Notes } = require('../models');
