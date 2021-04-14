@@ -27,22 +27,22 @@
 // document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);
 
 // Hobby routes ----------------------------------------------------------------------
-const getSavedHobbies = async (event) => {
- console.log('Getting Saved Hobbies')
-  try{
-    const response = await fetch('/hobbies/', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-    if (response.ok) {
-      return res.render('dashboard', { hobbies });
-    } else {
-      alert('Failed to render user hobbies');
-    }
-  }catch(error){
-     return res.status(400).json(error)
-  }
-};
+// const getSavedHobbies = async (event) => {
+//  console.log('Getting Saved Hobbies')
+//   try{
+//     const response = await fetch('/hobbies/', {
+//       method: 'GET',
+//       headers: { 'Content-Type': 'application/json' },
+//     })
+//     if (response.ok) {
+//       // return res.render('dashboard', { hobbies });
+//     } else {
+//       alert('Failed to render user hobbies');
+//     }
+//   }catch(error){
+//      return res.status(400).json(error)
+//   }
+// };
 
 const postHobby = async (event) => {
   console.log('saving hobby')  
@@ -187,31 +187,42 @@ const postHobby = async (event) => {
   };
 
   const getHobbyPlaylist = async () => {
-    const hobbyName = document.querySelector('.savedHobbyName').value.trim();
+    const hobby_Name = document.querySelector('.savedHobbyName');
+    const hobby_Id = document.querySelector('.savedHobby')
+    const hobbyName = hobby_Name.textContent
+    const hobbyId = hobby_Id.dataset.id;
+    console.log(hobbyName);
+    console.log(hobbyId);
     try{
-      const response = await fetch(`/api/videos/view/playlist`, {
+      const response = await fetch('/playlist', {
         method: 'GET',
         body: JSON.stringify({
-          name: hobbyName
+          name: hobbyName,
+          id: hobbyId ,
         }),
         headers: { 'Content-Type': 'application/json' },
       });
-    }catch(error){
-        res.status(400)
+      if (response.ok) {
+        console.log(' Getting hobby playlist');
+      } else {
+        alert('Failed to retrieve hobby');
+      }
+    }catch(err){
+         console.log(err)
     }
   };
 
   document
-    .querySelector('.saved-Hobbies')
+    .querySelector('.savedHobbyName')
     .addEventListener('click', getHobbyPlaylist)
 
     document
     .querySelector('.saved-Hobbies')
     .addEventListener('delete', deleteHobby);
 
-    document
-    .querySelector('.savedHobbyView')
-    .addEventListener('click', getSavedHobbies);
+    // document
+    // .querySelector('.savedHobby')
+    // .addEventListener('click', getSavedHobbies);
 
   document
     .querySelector('.newHobbyForm')

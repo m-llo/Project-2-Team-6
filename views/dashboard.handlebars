@@ -6,18 +6,18 @@
          <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Saved Hobbies</span>
          </h6>
-         <p>Click Here to view your saved Hobbies</p>
-         <button class="btn btn-secondary savedHobbyView" type="submit">View</button>
+         <p class="m-2">Select a hobby to view its playlist of saved videos.</p>
+         {{!-- <button class="btn btn-secondary savedHobbyView" type="submit">View</button> --}}
             <ul class="nav flex-column saved-Hobbies m-2" id="myHobbies">
         {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies --}}
         {{#each hobbies as |hobby|}}
          <li class="nav-item">
            <p hidden class="hobbyId">{{{hobby.id}}}</p>
-            <a class="nav-link active savedHobbyName" aria-current="page" href="#">
+            <a class="nav-link active savedHobby" aria-current="page" data-id ='{{{hobby.id}}}' href="#">
 
               <span data-feather="home"></span>
-              <h5>{{{hobby.name}}}</h5>
-              <button class="btn btn-danger deleteHobby" type="delete">Delete</button>
+              <h5 class="savedHobbyName">{{{hobby.name}}}</h5>
+              <button class="btn btn-danger btn-sm deleteHobby" type="delete">Delete</button>
             </a>
           </li>
         {{/each}}
