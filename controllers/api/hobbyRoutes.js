@@ -5,23 +5,32 @@ const withAuth = require('../../utils/auth');
 const hobbySearch = require('../../utils/hobbysearch');
 const videoSearch = require('../../utils/videosearch');
 
-router.post('/new/hobby', withAuth, async (req, res) => {
+router.post('/new/hobby', async (req, res) => {
+    console.log("new hobby post route: ", req.body.name)
     try {
         const newHobby = await Hobby.create({
-            name: req.body,
+            name: req.body.name,
             user_id: req.session.user_id,
         });
 
-        // res.status(200).json(newHobby);
-    const hobbies = newHobby;
-       
-     const ytVideos = hobbySearch(hobby)
-        // push hobbydata to an array called newHobbyInfo to allow us to grab what we want.and post to handlebars 
-     res.render('dashboard', { hobbies, ytVideos, loggedIn: req.session.logged_in })
-        res.status(500).json(err);
-    //  handlebars renders cards for each video so the user can choose a video to view
+        res.status(200).json(newHobby);
+        console.log("new hobby added:", newHobby)
+    // const hobby = newHobby.name;
+    // console.log("searching for videos related to: ", hobby)
+    // // const ytVideos = hobbySearch(hobby)
+    // //  console.log(ytVideos)
+
+    // const allHobbies = await Hobby.findAll({where: {user_id: req.session.user_id}})
+
+    // const hobbies = allHobbies.get({ plain: true });
+    //    console.log(hobbies)
+    //     // push hobbydata to an array called newHobbyInfo to allow us to grab what we want.and post to handlebars 
+    //  res.render('dashboard', { hobbies, loggedIn: req.session.logged_in })
+    //     res.status(500).json(err);
+    // //  handlebars renders cards for each video so the user can choose a video to view
     } catch (err) {
-        res.status(400).json(err);
+       res.status(400).json(err);
+       return
     }
 });
 
@@ -59,20 +68,23 @@ router.get('/', async (req, res) => {
   );
 
 // when user clicks delete button next to hobby on My hobbies
-router.delete('/delete/', withAuth, async (req, res) => {
+router.delete('/delete/', async (req, res) => {
     try {
         const hobbyData = await Hobby.destroy({
             where: {
                 id: req.body.id,
-                user_id: req.session.user_id,
+                user_id: req.body.user_id,
             },
         });
 
         if (!hobbyData) {
             res.status(404).json({ message: 'Hobby not found.'})
+        }else{
+            res.status(200).json({message: 'Hobby Deleted Successfully.'})
         }
     } catch (err) {
         res.status(500).json(err);
+        console.log(err)
     }
 })
 

@@ -1,12 +1,13 @@
 const router = require('express').Router();
 //const { User } = require('../models')
-//const { Hobby } = require('../models')
-//const { Notes } = require('../models')
-//const { Videos } = require('../models')
+const { Hobby } = require('../models')
+const { Notes } = require('../models')
+const { Videos } = require('../models')
 const nodemailer = require('nodemailer');
 
 // const { Hobby, User, Videos, Notes } = require('../models');
 const withAuth = require('../utils/auth');
+
 
 router.get('/login', async (req, res) => {
     // If a session exists, redirect the request to the homepage
@@ -73,20 +74,37 @@ router.get('/', withAuth, async (req, res) => {
 });
 
 
-router.get('/dashboard',  withAuth, async (req, res) => {
+// router.get('/dashboard',  withAuth, async (req, res) => {
+//   console.log("dashboard");
+//   try {
+      
+     
+//           res.render('dashboard',  {loggedIn: req.session.loggedIn});
+  
+  
+//     }catch (err) {
+//       console.log(err); 
+//     res.status(500).json(err);
+//   }
+// });
+
+router.get('/dashboard', async (req, res) => {
   console.log("dashboard");
   try {
       
-     
-          res.render('dashboard',  {loggedIn: req.session.loggedIn});
+    const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
+    console.log("hobbyData", hobbyData);
+    const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
+
+
+          res.render('dashboard',  { hobbies, loggedIn: req.session.loggedIn});
   
   
     }catch (err) {
       console.log(err); 
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
-
 
   router.get('/hobby/:id', async (req, res) => {
     try {
@@ -135,23 +153,21 @@ router.get('/Notes/:id', withAuth, async (req, res) => {
 
 
 
-router.get('/myhobbies', async (req, res) => {
-  console.log("hobby get route hit")
+// router.get('/hobbies/', async (req, res) => {
+//   console.log("hobby get route hit")
+//   try {
+//     const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
+//     console.log("hobbyData", hobbyData);
+//   const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
+//   // const hobbies = await hobbyData.get({ plain: true });
+//     // console.log("hobbies:", hobbies)
+//     res.render('dashboard', { hobbies });
+//     }catch (err) {
+//       console.log(err)
+//     return res.status(400).json(err);
+//   }
+// }
 
-  try {
-    const hobbyData = await Hobby.findByPk(req.session.user_id)
-    console.log("hobbyData", hobbyData);
-  // const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
-  const hobbies = hobbyData.get({ plain: true });
-    console.log("hobbies plain", hobbies)
-    const arrayHobbies=[hobbies]
-  
-  res.render('dashboard', { arrayHobbies });
-    }catch (err) {
-    res.json(err);
-  }
-}
-
-);
+// );
 
 module.exports = router;

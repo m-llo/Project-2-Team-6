@@ -27,30 +27,37 @@
 // document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);
 
 // Hobby routes ----------------------------------------------------------------------
-const getSavedHobbies = async () => {
+const getSavedHobbies = async (event) => {
+ console.log('Getting Saved Hobbies')
   try{
-    const response = await fetch('/myhobbies', {
+    const response = await fetch('/hobbies/', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
-    });
-    console.log('Getting Hobbies ')
+    })
+    if (response.ok) {
+      return res.render('dashboard', { hobbies });
+    } else {
+      alert('Failed to render user hobbies');
+    }
   }catch(error){
-      res.status(400)
+     return res.status(400).json(error)
   }
 };
 
 const postHobby = async (event) => {
   console.log('saving hobby')  
   event.preventDefault();
-    const hobbyName = document.querySelector('#hobbyName').value.trim();
+    const hobbyName = document.querySelector('#hobby-name').value.trim();
+    console.log(hobbyName)
     try{
       const response = await fetch('/api/dashboard/new/hobby', {
         method: 'POST',
-        body: JSON.stringify({hobbyName}),
+        body: JSON.stringify({name: hobbyName}),
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        document.location.replace('/');
+        res.redirect('/dashboard')
+        // document.location.replace('/dashboard');
       } else {
         alert('Failed to save hobby');
       }
@@ -61,11 +68,14 @@ const postHobby = async (event) => {
 
   const deleteHobby = async () => {
     const hobbyId = document.querySelector('.hobbyId');
+    const user_id = req.sesson.user_id
+    console.log("deleting hobby: ", hobbyId, "where user_id: ", user_id)
     try{
       const response = await fetch('/api/dashboard/delete', {
         method: 'DELETE',
         body: JSON.stringify({
-          id:  hobbyId
+          id:  hobbyId ,
+          user_id: user_id
         }),
         headers: { 'Content-Type': 'application/json' },
       });if (response.ok) {
@@ -192,8 +202,12 @@ const postHobby = async (event) => {
   };
 
   document
-    .querySelector('.savedHobbyName')
-    .addEventListener('click', getHobbyPlaylist);
+    .querySelector('.saved-Hobbies')
+    .addEventListener('click', getHobbyPlaylist)
+
+    document
+    .querySelector('.saved-Hobbies')
+    .addEventListener('delete', deleteHobby);
 
     document
     .querySelector('.savedHobbyView')
@@ -201,20 +215,25 @@ const postHobby = async (event) => {
 
   document
     .querySelector('.newHobbyForm')
-    .addEventListener('submit', postHobby, getNewVideos);
+    .addEventListener('submit', postHobby);
 
     document
-    .querySelector('.videoCardBody')
-    .addEventListener('submit', postVideo);
-    
+    .querySelector('.newHobbyForm')
+    .addEventListener('submit', getNewVideos);
+
     document
-    .querySelector('.videoCardBody')
+    .querySelector('#playlistDisplay')
+    .addEventListener('submit', viewSavedVideo)
+   
+    document
+    .querySelector('#playlistDisplay')
     .addEventListener('delete', deleteVideo);
+    
+
+    // document
+    // .querySelector('.deleteHobby')
+    // .addEventListener('delete', deleteHobby);
 
     document
-    .querySelector('.deleteHobby')
-    .addEventListener('delete', deleteHobby);
-
-    document
-    .querySelector('.savedVidView')
-    .addEventListener('submit', viewSavedVideo);
+    .querySelector('#videoSearchDisplay')
+    .addEventListener('submit', postVideo)

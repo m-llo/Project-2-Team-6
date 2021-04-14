@@ -26,6 +26,8 @@ Hobby.init(
     {
         sequelize,
         timestamps: false,
+        createdAt:false,
+        updatedAt:false,
         freezeTableName: true,
         underscored: true,
         modelName: 'hobby',
