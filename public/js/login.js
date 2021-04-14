@@ -11,9 +11,9 @@ const loginFormHandler = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
       console.log(email && password);
-      // if (response.ok) {
-      //   document.location.replace('/api/dashboard');
-      // } 
+      if (response.ok) {
+        document.location.replace('/dashboard');
+      } 
     }
     else {
       alert('Please enter an email address and password');
