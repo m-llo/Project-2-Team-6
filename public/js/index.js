@@ -27,6 +27,18 @@
 // document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);
 
 // Hobby routes ----------------------------------------------------------------------
+const getSavedHobbies = async () => {
+  try{
+    const response = await fetch('/myhobbies', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    console.log('Getting Hobbies ')
+  }catch(error){
+      res.status(400)
+  }
+};
+
 const postHobby = async (event) => {
   console.log('saving hobby')  
   event.preventDefault();
@@ -182,6 +194,10 @@ const postHobby = async (event) => {
   document
     .querySelector('.savedHobbyName')
     .addEventListener('click', getHobbyPlaylist);
+
+    document
+    .querySelector('.savedHobbyView')
+    .addEventListener('click', getSavedHobbies);
 
   document
     .querySelector('.newHobbyForm')
