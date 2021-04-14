@@ -43,8 +43,8 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  console.log("hi");
-  // console.log(res);
+  
+  
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
     console.log(userData);
