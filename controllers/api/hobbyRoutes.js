@@ -3,18 +3,19 @@ const router = require('express').Router();
 const { Hobby, User, Videos, Notes } = require('../../models');
 const withAuth = require('../../utils/auth');
 const hobbySearch = require('../../utils/hobbysearch');
-const videoSearch = require('../../utils/videosearch');
+const newVideoSearch = require('../../utils/newvideosearch');
 
 router.post('/new/hobby', async (req, res) => {
     console.log("new hobby post route: ", req.body.name)
+   
     try {
         const newHobby = await Hobby.create({
             name: req.body.name,
             user_id: req.session.user_id,
         });
-
         res.status(200).json(newHobby);
         console.log("new hobby added:", newHobby)
+       
     } catch (err) {
        res.status(400).json(err);
        return
@@ -22,37 +23,36 @@ router.post('/new/hobby', async (req, res) => {
 });
 
 // // populates all user related hobbies on the side of the screeen
-router.get('/', async (req, res) => {
-    console.log("hobby get route hit")
-    req.session.user_id=1
-    try {
-      const userData = await User.findByPk(req.session.user_id, {
+// router.get('/', async (req, res) => {
+//     console.log("hobby get route hit")
+//     try {
+//       const userData = await User.findByPk(req.session.user_id, {
 
-        include:[
-             {
-                model: Hobby,
-                attributes: ["id", "name", "user_id"]
-             }
-        ]
-      })
-      console.log("hobbyData 40", hobbyData);
-        const hobbies = userData.hobbies
-    //const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
-    // const hobbies = hobbyData.get({ plain: true });
-    console.log('hobbies 43', JSON.stringify(hobbies.dataValues))
-    // console.log("hobby data[0]", hobbyData[0].hobbies[0])
-//     const arrayHobbies={
-//         hobbies: hobbyData.hobbies
-//    }
-//    console.log(arrayHobbies)
-//    res.render('dashboard', arrayHobbies);
-    res.render('dashboard', { hobbies });
-      }catch (err) {
-      res.json(err);
-    }
-  }
+//         include:[
+//              {
+//                 model: Hobby,
+//                 attributes: ["id", "name", "user_id"]
+//              }
+//         ]
+//       })
+//       console.log("hobbyData 40", hobbyData);
+//         const hobbies = userData.hobbies
+//     //const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
+//     // const hobbies = hobbyData.get({ plain: true });
+//     console.log('hobbies 43', JSON.stringify(hobbies.dataValues))
+//     // console.log("hobby data[0]", hobbyData[0].hobbies[0])
+// //     const arrayHobbies={
+// //         hobbies: hobbyData.hobbies
+// //    }
+// //    console.log(arrayHobbies)
+// //    res.render('dashboard', arrayHobbies);
+//     res.render('dashboard', { hobbies });
+//       }catch (err) {
+//       res.json(err);
+//     }
+//   }
   
-  );
+//   );
 
 // when user clicks delete button next to hobby on My hobbies
 router.delete('/delete/', async (req, res) => {
