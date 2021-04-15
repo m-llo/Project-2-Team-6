@@ -201,10 +201,16 @@ const postHobby = async (event) => {
         document.location.replace(`/playlist/${hobbyId}`)
     
   };
+  
+
+  
 
   document
-    .querySelector('.savedHobby')
-    .addEventListener('click', getHobbyPlaylist)
+  .querySelector('.savedHobby')
+  .addEventListener('click', getHobbyPlaylist)
+
+  
+  
 
     document
     .querySelector('.saved-Hobbies')
