@@ -12,7 +12,7 @@
             <ul class="nav flex-column list-group" id="myNotes">
 
               {{#each NotesList.notes as |notes|}}
-              <li class="list-group-item"><span>{{this.title}}</span></li>
+              <li class="list-group-item"><span><a href="/project/{{this.id}}">{{this.title}}</a></span></li>
 
               {{/each}}
             </ul>

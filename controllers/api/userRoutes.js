@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
     });
 
     res.status(200);
-    res.redirect('/api/dashboard');
+    res.redirect('/');
   } catch (err) {
     // res.status(400).json(err);
     console.log(err);
