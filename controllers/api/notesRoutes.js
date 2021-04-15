@@ -5,16 +5,16 @@ const withAuth = require('../../utils/auth');
 
 
 
-router.get('/:id', withAuth, async(req, res)=>{
-  try{
-      const dbNotesData=await Notes.findByPk(req.session.user_id);
-      const notes = dbNotesData.get({plain:true});
-      res.render('videoView', { notes, logged_in: req.session.logged_in });
-  } catch (err){
-      console.log(err);
-      res.status(500).json(err);
-  }
-});
+// router.get('/:id', withAuth, async(req, res)=>{
+//   try{
+//       const dbNotesData=await Notes.findByPk(req.session.user_id);
+//       const notes = dbNotesData.get({plain:true});
+//       res.render('videoView', { notes, logged_in: req.session.logged_in });
+//   } catch (err){
+//       console.log(err);
+//       res.status(500).json(err);
+//   }
+// });
 
 
 

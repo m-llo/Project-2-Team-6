@@ -12,7 +12,7 @@
             <ul class="nav flex-column list-group" id="myNotes">
 
               {{#each NotesList.notes as |notes|}}
-              <li class="list-group-item"><span><a href="/project/{{this.id}}">{{this.title}}</a></span></li>
+              <li class="list-group-item"><span><a href="/notes/{{notes.id}}">{{this.title}}</a></span></li>
 
               {{/each}}
             </ul>
@@ -42,21 +42,38 @@
       <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
         id="newNote">
-        <h1 class="h2">Add new note</h1>
+        <h1 class="h2">Notes</h1>
         {{!-- form to create a new notes --}}
         <i class="fas fa-pen text-light new-note"></i>
       </div>
-      <form class="new-notes-form">
-        <div class="form-group">
-          <input id="title" placeholder="Note Title" maxlength="28" type="text">
-        </div>
-        <div class="form-group">
-          <textarea id="text" placeholder="Note Text"></textarea>
-        </div>
 
+      <div class="note-container">
+        <label for="dish_name">
+          Notes Title:
+        </label>
+        <br />
+        <textarea class="note-title" id="title" name="note_title" rows="2" cols="60">
+                  {{singleNotes.title}}
+        </textarea>
+        <br />
+        <label for="description">
+          Notes text:
+        </label>
+        <br />
+        <textarea class="note-textarea" id="text" name="note_text" rows="7" cols="60">
+                  {{singleNotes.text}}
+          </textarea>
+        <br />
         <div class="form-group">
           <button id="btn btn-primary" type="submit">Save</button>
         </div>
+      </div>
+
+
+
+
+
+
 
       </form>
 

@@ -170,8 +170,13 @@ router.get('/video/:id', withAuth, async (req, res) => {
 });
 
 router.get('/notes/:id', withAuth, async (req, res) => {
+
   try {
-      const dbNotesData = await Videos.findByPk(req.params.id);
+      const dbNotesData = await Notes.findByPk(req.params.id);
+      if(!dbNotesData) {
+        res.status(404).json({message: 'No notes with this id!'});
+        return;
+    }
       const singleNotes = dbNotesData.get({ plain: true });
       console.log(singleNotes);
           res.render('videoView', { singleNotes, loggedIn: req.session.loggedIn });
@@ -181,6 +186,7 @@ router.get('/notes/:id', withAuth, async (req, res) => {
       console.log(err); 
     res.status(500).json(err);
   }
+
 });
 
 
