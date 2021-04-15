@@ -1,4 +1,8 @@
 const router = require('express').Router();
+require('dotenv').config();
+// how to search by either url or unique video_id
+const ytApiKey = process.env.API_SECRET;
+const fetch = require("node-fetch");
 
 const nodemailer = require('nodemailer');
 
@@ -130,13 +134,42 @@ router.get('/playlist/:id', async (req, res) => {
 router.get('/newvideos/:hobby', async (req, res) => {
     const hobby = req.params.hobby
   console.log("getting videos server running, searching for: ", hobby);
+  const baserequestURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&q='
+ // must include literal with keywords spaced with '+' inbetween these two parts
+    const tailrequestURL = '&type=video&maxResults=5&videoCaption=closedCaption&key='
+ // must include ytApiKey literal
+    const keywords = hobby;
+    console.log(keywords)
+    const keywordArr = keywords.split(" ")
+    console.log(keywordArr)
+    const keywordSearch = keywordArr.join('+')
+
+    const videoSearch = `${baserequestURL}${keywordSearch}${tailrequestURL}${ytApiKey}`
+    console.log(videoSearch)
+let status;
+let results;
   try {
+    const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
+    console.log("hobbyData", hobbyData);
+    const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));  
+
+fetch(videoSearch)
+.then((res) => { 
+    status = res.status; 
+    return res.json() 
+  })
+  .then((jsonData) => {
+    results = jsonData
+    // console.log("results: ", results);
+    console.log("api search status: ", status);
+    // console.log("items:", results.items)
+    const ytVideos = results.items
     
-    const newVideoResults = await newVideoSearch(hobby)
-    console.log("new video results from yt fetch: ", newVideoResults)
-    const ytVideos = newVideoResults.map((videoData) => videoData.get({ plain: true }));
-    console.log("ytVideos mapped plain: ",ytVideos)
-          res.render('dashboard',  {hobby, ytVideos, loggedIn: req.session.loggedIn});
+    console.log("new video results from yt fetch: ", ytVideos)
+    
+    // console.log("ytVideos mapped plain: ",ytVideos)
+          res.render('dashboard',  {hobby, ytVideos, hobbies, loggedIn: req.session.loggedIn});
+  })
     }catch (err) {
       console.log(err); 
     return res.status(500).json(err);

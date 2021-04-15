@@ -1,31 +1,28 @@
 <div class="container-fluid">
   <div class="row">
     <nav id="savedHobbies" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-
-      <div class="position-sticky pt-3">
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-          <span>Saved Hobbies</span>
-        </h6>
-        <p class="m-2">Select a hobby to view its playlist of saved videos.</p>
-        {{!-- <button class="btn btn-secondary savedHobbyView" type="submit">View</button> --}}
-        <ul class="nav flex-column saved-Hobbies m-2" id="myHobbies">
-          {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies
-          --}}
-          {{#each hobbies as |hobby|}}
-          <li class="nav-item">
-            <p hidden class="hobbyId">{{{hobby.id}}}</p>
-            <a class="nav-link active savedHobby" aria-current="page" data-id='{{{hobby.id}}}' href="#">
+     
+     <div class="position-sticky pt-3">
+         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+            <span>Saved Hobbies</span>
+         </h6>
+         <p class="m-2">Select a hobby to view its playlist of saved videos.</p>
+         {{!-- <button class="btn btn-secondary savedHobbyView" type="submit">View</button> --}}
+            <ul class="nav flex-column saved-Hobbies m-2" id="myHobbies">
+        {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies --}}
+        {{#each hobbies as |hobby|}}
+         <li class="nav-item">
+           <p hidden class="hobbyId">{{{hobby.id}}}</p>
+            <a class="nav-link active savedHobby" aria-current="page" data-id ='{{{hobby.id}}}' href="#">
 
               <span data-feather="home"></span>
               <h5 class="savedHobbyName">{{{hobby.name}}}</h5>
               <button class="btn btn-danger btn-sm deleteHobby" type="submit">Delete</button>
             </a>
           </li>
-          {{/each}}
-        </ul>
+        {{/each}}
+     </ul>
     </nav>
-
-
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="playlisttitle">
            <h1>Hobby Playlist</h1>
@@ -41,10 +38,10 @@
                 response.snippet.description, 
                    response.snippet.thumbnails.standard(or let it default)
                      response.snippet.thumbnails.url*/--}}
-           <div class='col-auto card text-white bg-dark m-2' style='width: 12rem;'>
-              <div class='videoCardBody'>
-                  <h5 class="savedvideoCardTitle text-center">{{{video.title}}}</h5>
-                  <img class="savedvideoCardThumbnail img-thumbnail border-dark .img-fluid. rounded mx-auto d-block" src={{{video.thumbnail}}} alt="thumbnail image"></img>
+           <div class='col-auto card text-white bg-dark m-2' style='width: 18rem;'>
+              <img class="savedvideoCardThumbnail border-dark img-fluid rounded mx-auto d-block card-img-top" src={{{video.thumbnail}}} alt="thumbnail image"></img>
+              <div class='videoCardBody card-body'>
+                  <h6 class="savedvideoCardTitle card-title text-center">{{{video.title}}}</h6>
                   <p class="savedvideoCardDesc">{{{video.description}}}</p>
                   <p hidden class="savedvideoCardURL">{{{video.url}}}</p>
                   <p hidden class="savedvideoCardYTID">{{{video.youtube_id}}}</p>
@@ -55,15 +52,11 @@
                   </div>
              </div>
            </div>
-
           {{/each}}
         </div>
-        <div
-          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-          id="newHobby">
-          <h1 class="h3">Add a new hobby</h1>
-          {{!-- form to create a new hobby with submit button that triggers Youtube api data pull and a place to render
-          searched
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"id="newHobby">
+          <h1 class="h2">Add a new hobby</h1>
+          {{!-- form to create a new hobby with submit button that triggers Youtube api data pull and a place to render searched
           videos and posts hobby to data base --}}
           <div class="newHobbyForm form" style="width: 26rem">
             <form class="form">
@@ -92,26 +85,25 @@
                 response.snippet.description, 
                    response.snippet.thumbnails.standard(or let it default)
                      response.snippet.thumbnails.url*/--}}
-           <div class='col-auto card text-white bg-primary m-2' style='width: 12rem;'>
-              <div class='videoCardBody'>
-                  <h5 class="videoCardTitle text-center">{{video.snippet.title}}</h5>
-                  <img class="videoCardThumbnail img-thumbnail border-dark .img-fluid. rounded mx-auto d-block" src={{{video.snippet.thumbnail.standard}}} alt="thumbnail image"></img>
-                  <p class="videoCardDesc">{{video.snippet.description}}</p>
-                  <p hidden class="videoCardURL">{{video.snippet.url}}</p>
-                  <p hidden class="videoCardYTID">{{video.id.videoId}}</p>
+           <div class='col-auto card text-white bg-dark m-2' style="18rem">
+           {{!-- img-thumbnail border-dark --}}
+            <img class="videoCardThumbnail  img-fluid img-thumbnail rounded mx-auto d-block card-img-top" src= {{{video.snippet.thumbnails.high.url}}} alt="thumbnail image"></img>
+            <div class='videoCardBody card-body'>
+                  <h6 class="videoCardTitle card-title text-center">{{{video.snippet.title}}}</h6>
+                  {{!-- <p class="videoCardDesc">{{video.snippet.description}}</p> --}}
+                  <p hidden class="videoCardURL">{{{video.snippet.url}}}</p>
+                  <p hidden class="videoCardYTID">{{{video.id.videoId}}}</p>
                    <div class="d-flex justify-content-end">
                   <button class="btn btn-success btn-sm newVidSave" type="submit">Save</button>
                   </div>
              </div>
            </div>
-
           {{/each}}
         </div>
-      </main>
-    </div>
 
+    </main>
   </div>
 </div>
-<footer class= "position-absolute bottom-0 start-50">CURATIO</footer>
+
 
 <script src="/js/index.js"></script>
