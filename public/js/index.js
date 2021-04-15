@@ -56,13 +56,15 @@ const postHobby = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        res.redirect('/dashboard')
-        // document.location.replace('/dashboard');
+        // res.redirect('/')
+        document.location.replace('/');
       } else {
         alert('Failed to save hobby');
       }
     }catch(error){
-        res.status(400)
+      console.log(error) 
+      return 
+      // status(400)
     }
   };
 
@@ -131,21 +133,21 @@ const postHobby = async (event) => {
     }
   };
 
-  const getNewVideos = async () => {
-    const hobbyName = document.querySelector('#hobbyName').value.trim();
+  // const getNewVideos = async () => {
+  //   const hobbyName = document.querySelector('#hobbyName').value.trim();
     
-    try{
-      const response = await fetch('/api/videos/', {
-        method: 'POST',
-        body: JSON.stringify({
-          name: hobbyName
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }catch(error){
-        res.status(400)
-    }
-  };
+  //   try{
+  //     const response = await fetch('/api/videos/', {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         name: hobbyName
+  //       }),
+  //       headers: { 'Content-Type': 'application/json' },
+  //     });
+  //   }catch(error){
+  //       res.status(400)
+  //   }
+  // };
 
 
   const deleteVideo = async () => {
@@ -193,27 +195,15 @@ const postHobby = async (event) => {
     const hobbyId = hobby_Id.dataset.id;
     console.log(hobbyName);
     console.log(hobbyId);
-    try{
-      const response = await fetch('/playlist', {
-        method: 'GET',
-        body: JSON.stringify({
-          name: hobbyName,
-          id: hobbyId ,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (response.ok) {
-        console.log(' Getting hobby playlist');
-      } else {
-        alert('Failed to retrieve hobby');
-      }
-    }catch(err){
-         console.log(err)
-    }
+    
+     
+     
+        document.location.replace(`/playlist/${hobbyId}`)
+    
   };
 
   document
-    .querySelector('.savedHobbyName')
+    .querySelector('.savedHobby')
     .addEventListener('click', getHobbyPlaylist)
 
     document
@@ -228,9 +218,9 @@ const postHobby = async (event) => {
     .querySelector('.newHobbyForm')
     .addEventListener('submit', postHobby);
 
-    document
-    .querySelector('.newHobbyForm')
-    .addEventListener('submit', getNewVideos);
+    // document
+    // .querySelector('.newHobbyForm')
+    // .addEventListener('submit', getNewVideos);
 
     document
     .querySelector('#playlistDisplay')

@@ -154,19 +154,20 @@ router.get('/Notes/:id', withAuth, async (req, res) => {
   }
 });
 
-router.get('/playlist', async (req, res) => {
+router.get('/playlist/:id', async (req, res) => {
   console.log("playlist");
   try {
-    const hobbyName= req.body.name; 
-    console.log("getting videos for:", hobbyName) 
-    const videoData = await Videos.findAll({where: {hobby_id: req.body.id}});
+    // console.log("queryname: ", req.query.name);
+    // const hobbyName= req.query.name; 
+    // console.log("getting videos for:", hobbyName) 
+    const videoData = await Videos.findAll({where: {hobby_id: req.params.id}});
     console.log("VideoData", videoData);
-    const videos = videoData.map((video) => video.get({ plain: true }));
-    console.log(videos)
+    const videoList = videoData.map((video) => video.get({ plain: true }));
+    console.log(videoList)
 
 
-          // res.render('playlist',  {hobbyName, loggedIn: req.session.loggedIn});
-          res.render('playlist',  {hobbyName, videos, loggedIn: req.session.loggedIn});
+          res.render('dashboard',  {videoList, loggedIn: req.session.loggedIn});
+          // res.render('dashboard',  {videos, loggedIn: req.session.loggedIn});
   
   
     }catch (err) {
