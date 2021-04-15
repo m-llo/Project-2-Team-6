@@ -52,7 +52,7 @@ body {
 }
 
 .sidebar .nav-link.active {
-  color: #007bff;
+  color: #274f7b;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -199,4 +199,3 @@ body {
   padding: 20px;
   cursor: pointer;
 }
-=======
