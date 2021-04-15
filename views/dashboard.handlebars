@@ -27,14 +27,15 @@
          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="playlistDisplay">
            <h1>Hobby Playlist</h1>
            <h3>Select a saved hobby from "My Hobbies" to view saved videos here:</h3>
-          {{#each playlist as |video|}}
+          {{#each videoList as |video|}}
            {{!-- populates with videos related to selected hobby #each making a card for videos returned from YT 
            response.id.videoId to return unique video identifier, 
                  response.snippet.title for the video title, 
                 response.snippet.description, 
                    response.snippet.thumbnails.standard(or let it default)
                      response.snippet.thumbnails.url*/--}}
-           <div class='col-auto card text-white bg-primary m-2' style='width: 12rem;'>
+
+           <div class='col-auto card text-white bg-primary m-2' style='12 rem'>
               <div class='videoCardBody'>
                   <div class="savedvideoCardThumbnail">{{video.thumbnail}}</div>
                   <h5 class="savedvideoCardTitle text-center">{{video.title}}</h5>
