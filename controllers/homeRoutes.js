@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 
 const { Hobby, User, Videos, Notes } = require('../models');
 const withAuth = require('../utils/auth');
+const newVideoSearch = require('../utils/newvideosearch');
 
 
 router.get('/login', async (req, res) => {
@@ -16,75 +17,6 @@ router.get('/login', async (req, res) => {
   }
        
 });
-
-    // //  populates all user related hobbies on the side of the screeen
-    // router.get('/hobby/:id', async (req, res) => {
-    //     console.log("hobby get route hit")
-    //     // req.session.user_id=1
-    //     try {
-    //       const hobbyData = await User.findByPk(req.params.id, {
-
-    //         include:[
-    //             {
-    //                 model: Hobby,
-    //                 attributes: ["id", "name", "user_id"]
-    //             }
-    //         ]
-    //       })
-    //       console.log("hobbyData 40", hobbyData);
-    //     const hobbies =  hobby.get({ plain: true }); 
-    //     // hobbyData.map((hobby) =>
-    //     // const hobbies = hobbyData.get({ plain: true });
-    //     console.log('hobbies 43', JSON.stringify(hobbies.dataValues))
-    //     // console.log("hobby data[0]", hobbyData[0].hobbies[0])
-    // //     const arrayHobbies={
-    // //         hobbies: hobbyData.hobbies
-    // //    }
-    // //    console.log(arrayHobbies)
-    // //    res.render('dashboard', arrayHobbies);
-    //     res.render('dashboard', { hobbies, loggedIn: req.session.loggedIn});
-    //       }catch (err) {
-    //       res.json(err);
-    //     }
-    //   }
-      
-    //   );
-// , withAuth
-// , loggedIn: req.session.loggedIn
-// Prevent non logged in users from viewing the homepage
-// router.get('/', withAuth, async (req, res) => {
-//   try {
-//     const userData = await User.findAll({
-//       attributes: { exclude: ['password'] },
-//       order: [['username', 'ASC']],
-//     });
-
-//     const users = userData.map((project) => project.get({ plain: true }));
-
-//     res.render('dashboard', {
-//       users,
-//       // Pass the logged in flag to the template
-//       logged_in: req.session.logged_in,
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
-
-// router.get('/dashboard',  withAuth, async (req, res) => {
-//   console.log("dashboard");
-//   try {
-      
-     
-//           res.render('dashboard',  {loggedIn: req.session.loggedIn});
-  
-  
-//     }catch (err) {
-//       console.log(err); 
-//     res.status(500).json(err);
-//   }
-// });
 
 router.get('/', async (req, res) => {
   if (!req.session.logged_in) {
@@ -108,29 +40,6 @@ router.get('/', async (req, res) => {
     return res.status(500).json(err);
   }
 });
-
-  router.get('/hobby/:id', async (req, res) => {
-    try {
-        const dbHobbyData = await User.findByPk(req.params.id,{
-          include:[
-            {
-              model:Hobby,
-              attributes:['id', 'name', 'user_id' ]
-            }
-        ],
-        });
-        const hobbyList = dbHobbyData.get({ plain: true });
-        console.log(hobbyList);
-            res.render('dashboard', { hobbyList });
-    
-    
-      }catch (err) {
-        console.log(err); 
-      res.status(500).json(err);
-    }
-  });
-
-
 
 
 router.get('/noteslist/:id', withAuth, async (req, res) => {
@@ -200,11 +109,15 @@ router.get('/playlist/:id', async (req, res) => {
     // console.log("getting videos for:", hobbyName) 
     const videoData = await Videos.findAll({where: {hobby_id: req.params.id}});
     console.log("VideoData", videoData);
-    const videoList = videoData.map((video) => video.get({ plain: true }));
-    console.log(videoList)
+    const playList = videoData.map((video) => video.get({ plain: true }));
+    console.log(playList)
+
+    const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
+    console.log("hobbyData", hobbyData);
+    const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));
 
 
-          res.render('dashboard',  {videoList, loggedIn: req.session.loggedIn});
+          res.render('dashboard',  {playList, hobbies, loggedIn: req.session.loggedIn});
           // res.render('dashboard',  {videos, loggedIn: req.session.loggedIn});
   
   
@@ -213,6 +126,46 @@ router.get('/playlist/:id', async (req, res) => {
     return res.status(500).json(err);
   }
 });
+
+router.get('/newvideos/:hobby', async (req, res) => {
+    const hobby = req.params.hobby
+  console.log("getting videos server running, searching for: ", hobby);
+  try {
+    
+    const newVideoResults = await newVideoSearch(hobby)
+    console.log("new video results from yt fetch: ", newVideoResults)
+    const ytVideos = newVideoResults.map((videoData) => videoData.get({ plain: true }));
+    console.log("ytVideos mapped plain: ",ytVideos)
+          res.render('dashboard',  {hobby, ytVideos, loggedIn: req.session.loggedIn});
+    }catch (err) {
+      console.log(err); 
+    return res.status(500).json(err);
+  }
+});
+
+
+// router.get('/new/hobby/:name', async (req, res) => {
+
+//   keyword
+//   try {
+//     // console.log("queryname: ", req.query.name);
+//     // const hobbyName= req.query.name; 
+//     // console.log("getting videos for:", hobbyName) 
+//     const videoData = await Videos.findAll({where: {hobby_id: req.params.id}});
+//     console.log("VideoData", videoData);
+//     const videoList = videoData.map((video) => video.get({ plain: true }));
+//     console.log(videoList)
+
+
+//           res.render('dashboard',  {videoList, loggedIn: req.session.loggedIn});
+//           // res.render('dashboard',  {videos, loggedIn: req.session.loggedIn});
+  
+  
+//     }catch (err) {
+//       console.log(err); 
+//     return res.status(500).json(err);
+//   }
+// });
 
 
 module.exports = router;
