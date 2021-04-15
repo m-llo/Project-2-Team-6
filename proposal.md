@@ -2,7 +2,7 @@
 
 ## Value Add Proposal
 The application allows users to login into CURATIO and see their hobbies tiles; they can click into those tiles and see the list of videos associated with those hobbies on their screen; they can then see their note taking panel next to thier video library.
-
+    
 ## Overview
 CURATIO will allow users to search for Youtube videos by hobby, create lists based on their interests, and take real-time notes while watching their curated list, which they can then send to their email for later review.  The Curator user will have their profile on the app, which will allow them to store multiple video libraries and their corresponding notes.
 
