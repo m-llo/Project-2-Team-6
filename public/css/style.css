@@ -144,7 +144,7 @@ body {
   cursor: pointer;
 }
 
-.note-textarea,
+/* .note-textarea,
 .note-title {
   color: #000000;
   width: 100%;
@@ -159,10 +159,10 @@ body {
 }
 
 .note-title {
-  height: 50px;
+  height: 20px;
   margin-top: 13px;
-  font-size: 3rem;
-}
+  font-size: 1.5rem;
+} */
 
 .note-title:read-only,
 .note-textarea:read-only {
@@ -198,4 +198,6 @@ body {
   border-right: none;
   padding: 20px;
   cursor: pointer;
+
 }
+

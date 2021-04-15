@@ -24,4 +24,9 @@ const addNotesHandler=async (event) =>{
       res.status(500);
     }
 }
+
+
+
+
+
 document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);

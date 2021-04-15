@@ -174,8 +174,11 @@ const postHobby = async (event) => {
 
 
   document
-    .querySelector('.savedHobby')
-    .addEventListener('click', getHobbyPlaylist)
+  .querySelector('.savedHobby')
+  .addEventListener('click', getHobbyPlaylist)
+
+  
+  
 
     document
     .querySelector('.saved-Hobbies')
