@@ -46,7 +46,8 @@
                   <p hidden class="savedvideoCardURL">{{{video.url}}}</p>
                   <p hidden class="savedvideoCardYTID">{{{video.youtube_id}}}</p>
                   <div class="d-flex justify-content-between">
-                  <button class="btn btn-success btn-sm savedVidView" type="submit">View</button>
+                  {{!-- <button class="btn btn-success btn-sm savedVidView" type="submit">View</button> --}}
+                   <a href="/noteslist/{{{video.id}}}" class="btn btn-sm btn-success active savedVidView" role="button">View</a>
                   <button class="btn btn-danger btn-sm deleteVid ali" type="submit">Delete</button>
                   </div>
              </div>
