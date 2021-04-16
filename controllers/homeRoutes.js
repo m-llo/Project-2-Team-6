@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/noteslist/:id', withAuth, async (req, res) => {
+router.get('/video/:id', withAuth, async (req, res) => {
   try {
       const dbVideoData = await Videos.findByPk(req.params.id,{
         include:[
@@ -68,19 +68,19 @@ router.get('/noteslist/:id', withAuth, async (req, res) => {
 });
 
 
-router.get('/video/:id', withAuth, async (req, res) => {
-  try {
-      const dbvideoData = await Videos.findByPk(req.params.id);
-      const singlevideo = dbNotesData.get({ plain: true });
-      console.log(singlevideo);
-          res.render('videoView', { singlevideo, loggedIn: req.session.loggedIn });
+// router.get('/video/:id', withAuth, async (req, res) => {
+//   try {
+//       const dbvideoData = await Videos.findByPk(req.params.id);
+//       const singlevideo = dbNotesData.get({ plain: true });
+//       console.log(singlevideo);
+//           res.render('videoView', { singlevideo, loggedIn: req.session.loggedIn });
   
   
-    }catch (err) {
-      console.log(err); 
-    res.status(500).json(err);
-  }
-});
+//     }catch (err) {
+//       console.log(err); 
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/notes/:id', withAuth, async (req, res) => {
 

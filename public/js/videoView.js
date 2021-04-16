@@ -1,14 +1,25 @@
 // Add Nodes
-const addNotesHandler=async (event) =>{
-    event.preventDefault();
-    const title = document.querySelector('#dish_name').value.trim;
-    const text = document.querySelector('#description').value.trim;
+saveNoteBtn = document.querySelector('.save-note');
+
+const handleNoteSave=async (event) =>{
+ 
+  console.log('saving notes')
+  event.preventDefault();
+
+    
+    const title = document.querySelector('#note-title').value;
+    const text = document.querySelector('#note-textarea').value;
+    const videos_id =document.querySelector('#videoID').textContent;
+
+    console.log(videos_id);
+
     try{
-      const response = await fetch('/api/notes',{
+      const response = await fetch('/api/notes/save',{
         method:'POST',
         body: JSON.stringify({
-          title,
-          text,
+          title:title,
+          text:text,
+          videos_id:1
         }),
         headers:{
           'Content-Type': 'application/json',
@@ -16,17 +27,36 @@ const addNotesHandler=async (event) =>{
       });
       // if the note is added, 
       if (response.ok) {
-        document.location.replace('/');
+        // document.location.replace('/');
+         document.location.replace(`/video/${videos_id}`)
       } else {
         alert('Failed to add notes');
       }
     } catch(err){
       res.status(500);
+      return
     }
 }
 
 
+// const delButtonHandler =  (id) => {
+//   const videos_id =document.querySelector('#videoID').textContent;
+  
+//     const response = await fetch(`/api/notes/delete/${id}`, {
+//       method: 'DELETE',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//     });
+
+//     if (response.ok) {
+//       document.location.replace(`/video/${videos_id}`)
+//     } else {
+//       alert('Failed to delete project');
+//     }
+//   }
+// };
 
 
+saveNoteBtn.addEventListener('click', handleNoteSave);
 
-document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);
