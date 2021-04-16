@@ -1,31 +1,3 @@
-// // Add Nodes
-// const addNotesHandler=async (event) =>{
-//       event.preventDefault();
-//       const title = document.querySelector('#dish_name').value.trim;
-//       const text = document.querySelector('#description').value.trim;
-//       try{
-//         const response = await fetch('/api/notes',{
-//           method:'POST',
-//           body: JSON.stringify({
-//             title,
-//             text,
-//           }),
-//           headers:{
-//             'Content-Type': 'application/json',
-//           },
-//         });
-//         // if the note is added, 
-//         if (response.ok) {
-//           document.location.replace('/');
-//         } else {
-//           alert('Failed to add notes');
-//         }
-//       } catch(err){
-//         res.status(500);
-//       }
-// }
-// document.querySelector('.new-notes-form').addEventListener('submit', addNotesHandler);
-
 // Hobby routes ----------------------------------------------------------------------
 
 const postHobby = async (event) => {
@@ -40,15 +12,14 @@ const postHobby = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        // res.redirect('/')
-        document.location.replace('/');
+          document.location.replace('/');
       } else {
         alert('Failed to save hobby');
       }
     }catch(error){
       console.log(error) 
       return 
-      // status(400)
+      
     }
   };
 
@@ -93,34 +64,29 @@ const postHobby = async (event) => {
 
 // Videos routes ------------------------------------------------- 
   const postVideo = async () => {
-    const videoTitle = document.querySelector('.videoCardTitle');
-    const videoThumbnail = document.querySelector('.videoCardThumbnail');
-    const videoDescription = document.querySelector('.videoCardDesc');
-    const videoURL = document.querySelector('.videoCardURL');
-    const videoYTID = document.querySelector('.videoCardYTID');
-    const hobbyName = document.querySelector('#hobbyName').value.trim();
-    
+    const videoTitle = document.querySelector('.videoCardTitle').textContent;
+    const videoThumbnail = document.querySelector('.videoCardThumbnail').textContent;
+    const videoYTID = document.querySelector('.videoCardYTID').textContent;
+    const hobbyName = document.querySelector('#hobby_name').textContent;
+    console.log("Saving Video: ", videoTitle, "to", hobbyName)
     try{
-     const getHobbyId = await fetch (`/api/dashboard/gethobby/${hobbyName}`)
       const response = await fetch('/api/videos/save', {
         method: 'POST',
         body: JSON.stringify({
           title: videoTitle,
           youtube_id: videoYTID,
-          URL: videoURL,
           thumbnail: videoThumbnail,
-          description: videoDescription,
-          hobby_id: getHobbyId
+          hobbyName:hobbyName
         }),
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        document.location.replace('/');
+        alert("video Saved")
       } else {
-        alert('Failed to save video');
+        alert('Failed to save video, Please make sure to create your playlist first');
       }
     }catch(error){
-        res.status(400)
+      console.log(error)
     }
   };
 
@@ -156,7 +122,7 @@ const postHobby = async (event) => {
 
 
   const viewSavedVideo = async () => {
-    const ytVideoId = document.querySelector('.savedvideoCardID');
+    const ytVideoId = document.querySelector('.savedvideoCardYTID').textContent;
     
     try{
       const response = await fetch('/api/videos/view', {
@@ -173,38 +139,41 @@ const postHobby = async (event) => {
 
 
 
-  document
-  .querySelector('.savedHobby')
-  .addEventListener('click', getHobbyPlaylist)
-
   
   
-
-    document
-    .querySelector('.saved-Hobbies')
-    .addEventListener('delete', deleteHobby);
+  const playlistButtons = document.querySelectorAll('.savedHobby')
+  playlistButtons.forEach((el,idx)=>{
+    el.addEventListener('click', getHobbyPlaylist)
+  })
 
   document
     .querySelector('#saveHobby')
-    .addEventListener('submit', postHobby);
+    .addEventListener('click', postHobby);
 
     document
     .querySelector('#newVidSearch')
     .addEventListener('click', getNewVideos); 
 
-    document
-    .querySelector('.savedVidView')
-    .addEventListener('submit', viewSavedVideo)
-   
-    document
-    .querySelector('.deleteVid')
-    .addEventListener('delete', deleteVideo);
+    const viewVideoButtons = document.querySelectorAll('.savedVidView')
+    viewVideoButtons.forEach((el,idx)=>{
+      el.addEventListener('click', viewSavedVideo)
+    })
+
+    const videoDeleteButtons = document.querySelectorAll('.deleteVid')
+    viewVideoButtons.forEach((el,idx)=>{
+      el.addEventListener('click', deleteVideo)
+    })
     
 
-    document
-    .querySelector('.deleteHobby')
-    .addEventListener('delete', deleteHobby);
+  const deltetHobbyButtons = document.querySelectorAll('.deleteHobby')
+  deltetHobbyButtons.forEach((el,idx)=>{
+      el.addEventListener('click', deleteHobby)
+    })
 
-    document
-    .querySelector('.newVidSave')
-    .addEventListener('submit', postVideo)
+
+  const saveButtons = document.querySelectorAll('.newVidSave')
+  saveButtons.forEach((el,idx)=>{
+    el.addEventListener('click', postVideo)
+    
+  })
+

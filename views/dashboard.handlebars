@@ -8,7 +8,7 @@
          </h6>
          <p class="m-2">Select a hobby to view its playlist of saved videos.</p>
          {{!-- <button class="btn btn-secondary savedHobbyView" type="submit">View</button> --}}
-            <ul class="nav flex-column saved-Hobbies m-2" id="myHobbies">
+            <ul class="nav flex-column saved-Hobbies m-2 overflow-auto" id="myHobbies">
         {{!-- will get saved hobbies by user_id, then #each hobby as |hobby| insert html to render list of hobbies --}}
         {{#each hobbies as |hobby|}}
          <li class="nav-item">
@@ -24,6 +24,18 @@
      </ul>
     </nav>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+     <h1 class="text-center">How To Curatio!</h1>
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"  >
+        <div>
+        <h6>1. Create an hobby playlist to curate by saving a hobby.</h6>
+                 <br>
+        <h6>2. Save videos to the hobby playlist</h6>
+                 <br>
+        <h6>3. Select a hobby from the hobby bar to view the playlist of videos.</h6>
+                 <br>
+        <h6>4. Watch videos from your playlist, take notes, and repeate by adding and deleting videos.</h6>
+        </div>       
+      </div>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="playlisttitle">
            <h1>Hobby Playlist</h1>
         </div>
@@ -32,12 +44,6 @@
         </div>
          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="playlistDisplay">
           {{#each playList as |video|}}
-           {{!-- populates with videos related to selected hobby #each making a card for videos returned from YT 
-           response.id.videoId to return unique video identifier, 
-                 response.snippet.title for the video title, 
-                response.snippet.description, 
-                   response.snippet.thumbnails.standard(or let it default)
-                     response.snippet.thumbnails.url*/--}}
            <div class='col-auto card text-white bg-dark m-2' style='width: 18rem;'>
               <img class="savedvideoCardThumbnail border-dark img-fluid rounded mx-auto d-block card-img-top" src={{{video.thumbnail}}} alt="thumbnail image"></img>
               <div class='videoCardBody card-body'>
@@ -48,7 +54,7 @@
                   <div class="d-flex justify-content-between">
                   {{!-- <button class="btn btn-success btn-sm savedVidView" type="submit">View</button> --}}
                    <a href="/noteslist/{{{video.id}}}" class="btn btn-sm btn-success active savedVidView" role="button">View</a>
-                  <button class="btn btn-danger btn-sm deleteVid ali" type="submit">Delete</button>
+                  <button class="btn btn-danger btn-sm deleteVid" type="submit">Delete</button>
                   </div>
              </div>
            </div>
@@ -72,30 +78,25 @@
           </div>
         </div>
          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="TopVidsTitle">
-           <h1> {{{hobby}}} Top Videos </h1>
+           <h1 id="hobby_name">{{{hobby}}}</h1>
+        
         </div>
-        <div>
-           <h6>Save videos to the hobby playlist first, then view videos from your playlist.</h6>
-       </div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom" id="videoSearchDisplay">
           {{#each ytVideos as |video|}}
-           {{!-- populates with videos related to selected hobby #each making a card for videos returned from YT 
-           response.id.videoId to return unique video identifier, 
-                 response.snippet.title for the video title, 
-                response.snippet.description, 
-                   response.snippet.thumbnails.standard(or let it default)
-                     response.snippet.thumbnails.url*/--}}
            <div class='col-auto card text-white bg-dark m-2' style="18rem">
            {{!-- img-thumbnail border-dark --}}
             <img class="videoCardThumbnail  img-fluid img-thumbnail rounded mx-auto d-block card-img-top" src= {{{video.snippet.thumbnails.high.url}}} alt="thumbnail image"></img>
             <div class='videoCardBody card-body'>
                   <h6 class="videoCardTitle card-title text-center">{{{video.snippet.title}}}</h6>
                   {{!-- <p class="videoCardDesc">{{video.snippet.description}}</p> --}}
-                  <p hidden class="videoCardURL">{{{video.snippet.url}}}</p>
                   <p hidden class="videoCardYTID">{{{video.id.videoId}}}</p>
                    <div class="d-flex justify-content-end">
                   <button class="btn btn-success btn-sm newVidSave" type="submit">Save</button>
                   </div>
+             </div>
+             <div>
+                <h6>Reminder!</h6>
+                 <p>2. Save videos only after you have created a Hobby Playlist</p>
              </div>
            </div>
           {{/each}}
