@@ -86,7 +86,7 @@
           {{#each ytVideos as |video|}}
            <div class='col-auto card text-white bg-dark m-2' style="18rem">
            {{!-- img-thumbnail border-dark --}}
-            <img class="videoCardThumbnail  img-fluid img-thumbnail rounded mx-auto d-block card-img-top" src= {{{video.snippet.thumbnails.high.url}}} alt="thumbnail image"></img>
+            <img class="videoCardThumbnail  img-fluid img-thumbnail rounded mx-auto d-block card-img-top" src= {{{video.snippet.thumbnails.high.url}}} alt="thumbnail image" data-index="{{{video.snippet.thumbnails.high.url}}}"></img>
             <div class='videoCardBody card-body'>
                   <h6 class="videoCardTitle card-title text-center">{{{video.snippet.title}}}</h6>
                   {{!-- <p class="videoCardDesc">{{video.snippet.description}}</p> --}}
