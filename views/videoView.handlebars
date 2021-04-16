@@ -12,7 +12,9 @@
             <ul class="nav flex-column list-group" id="myNotes">
 
               {{#each NotesList.notes as |notes|}}
-              <li class="list-group-item"><span><a href="/notes/{{notes.id}}">{{this.title}}</a></span></li>
+              <li class="list-group-item"><a href="/notes/{{notes.id}}">{{this.title}} </a>
+                <button class="fas fa-trash-alt float-right text-danger delete-note" type="submit"></button>
+              </li>
 
               {{/each}}
             </ul>
@@ -34,54 +36,52 @@
       <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
         id="primaryVideo">
+
         <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video.youtube_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
         {{!-- <iframe src="{{{youtube url from search}}}" title="{{{video title from search}}}"> width="" height=""--}}
 
           {{!-- </iframe> --}}
         {{!-- populates with selected videos after YT API query using iframe tags --}}
       </div>
-      <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
-        id="newNote">
-        <h1 class="h2">Notes</h1>
-        {{!-- form to create a new notes --}}
-        <i class="fas fa-pen text-light new-note"></i>
-      </div>
+      <div class="container-fluid">
+        <nav class="navbar navbar-dark bg-secondary ">
+          <a class="navbar-brand bg-secondary" href="">Notes</a>
+          <div class="icons">
+            <i class="fas fa-save text-light save-note"></i>
+            <i class="fas fa-pen text-light new-note"></i>
+          </div>
+        </nav>
 
-      <div class="note-container">
-        <label for="dish_name">
-          Notes Title:
-        </label>
-        <br />
-        <textarea class="note-title" id="title" name="note_title" rows="2" cols="60">
+        <div class="note-container">
+          <form class="new-note-form">
+            <label for="dish_name">
+              Notes Title:
+            </label>
+            <br />
+            <textarea id="note-title" id="title" name="note_title" rows="2" cols="112">
                   {{singleNotes.title}}
-        </textarea>
-        <br />
-        <label for="description">
-          Notes text:
-        </label>
-        <br />
-        <textarea class="note-textarea" id="text" name="note_text" rows="7" cols="60">
+              </textarea>
+            <br />
+            <label for="description">
+              Notes text:
+            </label>
+            <br />
+            <textarea id="note-textarea" id="text" name="note_text" rows="10" cols="112">
                   {{singleNotes.text}}
-          </textarea>
-        <br />
-        <div class="form-group">
-          <button id="btn btn-primary" type="submit">Save</button>
+              </textarea>
+            <br />
+
+            {{!-- <button id="btn btn-info btn-sm" type="submit" id="saveNotes">Save</button> --}}
+
+
+          </form>
         </div>
+
+
       </div>
-
-
-
-
-
-
-
-      </form>
-
+    </main>
   </div>
-
-  </main>
-</div>
 </div>
 
 
