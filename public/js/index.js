@@ -77,6 +77,7 @@ const postHobby = async (event) => {
   // };
 
   const deleteHobby = async (event) => {
+    console.log("Delete function called");
     if (event.target.hassAttribute('data-confirm')) {
       const id = event.target.getAttribute('eventHobby');
 
