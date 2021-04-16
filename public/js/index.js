@@ -52,27 +52,43 @@ const postHobby = async (event) => {
     }
   };
 
-  const deleteHobby = async () => {
-    const hobbyId = document.querySelector('.hobbyId');
-    const user_id = req.sesson.user_id
-    console.log("deleting hobby: ", hobbyId, "where user_id: ", user_id)
-    try{
-      const response = await fetch('/api/dashboard/delete', {
+  // const deleteHobby = async (event) => {
+  //   const hobbyId = document.querySelector('.hobbyId');
+  //   const user_id = req.sesson.user_id
+  //   console.log("deleting hobby: ", hobbyId, "where user_id: ", user_id)
+  //   try{
+  //     const response = await fetch('/api/dashboard/delete', {
+  //       method: 'DELETE',
+  //       body: JSON.stringify({
+  //         id:  hobbyId ,
+  //         user_id: user_id
+  //       }),
+  //       headers: { 'Content-Type': 'application/json' },
+  //     });if (response.ok) {
+  //       res.status(200);
+  //       alert("Hobby succesffully deleted from playlist.")
+  //       document.location.replace('/');
+  //     } else {
+  //       alert('Failed to delete hobby');
+  //     }
+  //   }catch(error){
+  //       res.status(400)
+  //   }
+  // };
+
+  const deleteHobby = async (event) => {
+    if (event.target.hassAttribute('data-confirm')) {
+      const id = event.target.getAttribute('eventHobby');
+
+      const response = await fetch(`/api/hobby/${id}`, {
         method: 'DELETE',
-        body: JSON.stringify({
-          id:  hobbyId ,
-          user_id: user_id
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });if (response.ok) {
-        res.status(200);
-        alert("Hobby succesffully deleted from playlist.")
-        document.location.replace('/');
+      });
+
+      if (response.ok) {
+        document.location.replace('/dashboard');
       } else {
-        alert('Failed to delete hobby');
+        alert('Could not delete hobby from list');
       }
-    }catch(error){
-        res.status(400)
     }
   };
 
@@ -180,9 +196,9 @@ const postHobby = async (event) => {
   
   
 
-    document
-    .querySelector('.saved-Hobbies')
-    .addEventListener('delete', deleteHobby);
+    // document
+    // .querySelector('.saved-Hobbies')
+    // .addEventListener('delete', deleteHobby);
 
   document
     .querySelector('#saveHobby')

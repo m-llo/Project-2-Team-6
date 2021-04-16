@@ -55,19 +55,21 @@ router.post('/new/hobby', async (req, res) => {
 //   );
 
 // when user clicks delete button next to hobby on My hobbies
-router.delete('/delete/', async (req, res) => {
+router.delete('/:id', async (req, res) => {
+    console.log('delete route hit');
     try {
         const hobbyData = await Hobby.destroy({
             where: {
-                id: req.body.id,
-                user_id: req.body.user_id,
+                id: req.params.id,
+                user_id: req.session.user_id,
             },
         });
 
         if (!hobbyData) {
             res.status(404).json({ message: 'Hobby not found.'})
+            return;
         }else{
-            res.status(200).json({message: 'Hobby Deleted Successfully.'})
+            res.status(200).json(hobbyData);
         }
     } catch (err) {
         res.status(500).json(err);
