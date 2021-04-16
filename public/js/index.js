@@ -64,19 +64,7 @@ const postHobby = async (event) => {
     }
   };
 
-  const getHobbyPlaylist = async () => {
-    const hobby_Name = document.querySelector('.savedHobbyName');
-    const hobby_Id = document.querySelector('.savedHobby')
-    const hobbyName = hobby_Name.textContent
-    const hobbyId = hobby_Id.dataset.id;
-    console.log(hobbyName);
-    console.log(hobbyId);
-    
-     
-     
-        document.location.replace(`/playlist/${hobbyId}`)
-    
-  };
+
 
 
 // Videos routes ------------------------------------------------- 
@@ -153,21 +141,6 @@ const postHobby = async (event) => {
         res.status(400)
     }
   };
-
-
-
-  
-  
-
-  const playlistButtons = document.querySelectorAll('.savedHobby')
-  playlistButtons.forEach((el,idx)=>{
-    el.addEventListener('click', getHobbyPlaylist)
-  })
-
-
-    // document
-    // .querySelector('.saved-Hobbies')
-    // .addEventListener('delete', deleteHobby);
 
 
   document
