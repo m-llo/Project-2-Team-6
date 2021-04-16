@@ -173,6 +173,7 @@ const postHobby = async (event) => {
 
 
   const viewSavedVideo = async () => {
+    console.log('youtube id: ', video.snippet.youtube_id);
     const ytVideoId = document.querySelector('.savedvideoCardID');
     
     try{
