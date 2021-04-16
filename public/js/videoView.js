@@ -56,7 +56,38 @@ const handleNoteSave=async (event) =>{
 //     }
 //   }
 // };
+const deleteNote = async (event) => {
+  console.log("Delete function called");
+  event.stopPropagation();
+  
+  const note = event.target;
+  const noteId = JSON.parse(note.parentElement.getAttribute('data-note'));
+  console.log(noteId);
+  
+
+    const response = await fetch(`/api/notes/delete/${noteId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+      });
+    
+
+    if (response.ok) {
+      const videos_id =document.querySelector('.videoid').textContent;
+      document.location.replace(`/video/${videos_id}`);
+    } else {
+      alert('Could not delete note from list');
+    }
+  
+};
 
 
 saveNoteBtn.addEventListener('click', handleNoteSave);
+
+
+const deltetNoteButtons = document.querySelectorAll('.delete-note')
+deltetNoteButtons.forEach((el,idx)=>{
+      el.addEventListener('click', deleteNote)
+    })
 

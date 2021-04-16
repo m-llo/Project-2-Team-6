@@ -14,16 +14,30 @@ router.post('/save', async (req, res) => {
             }
         });
         const newVideo = await Videos.create({
-            title: req.body.title,
-            youtube_id: req.body.youtube_id,
-            thumbnail: req.body.thumbnail,
-            hobby_id: hobbyid
+
+
+          title: req.body.title,
+          youtube_id: req.body.youtube_id,
+          URL: req.body.URL,
+          thumbnail: req.body.thumbnail,
+          description: req.body.description,
+          hobby_id: req.body.hobby_id
+          
+            
+        
         });
-        console.log("Saved video", newVideo)
-        res.status(200);
+        req.session.save(() => {
+            req.session.logged_in = true;
+      
+            res.status(200).json(newVideo);
+            // res.status(200).alert("video Saved");
+          });    
+        
     } catch (err) {
-        res.status(400).json(err)
         console.log(err);
+        res.status(400).json(err);
+        return;
+
     }
 });
 
