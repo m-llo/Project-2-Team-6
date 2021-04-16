@@ -1,3 +1,6 @@
+const { response } = require("express");
+
+//user login
 const loginFormHandler = async (event) => {
     event.preventDefault();
   
@@ -16,7 +19,7 @@ const loginFormHandler = async (event) => {
       } 
     }
     else {
-      alert('Please enter an email address and password');
+      alert('Oops! Please enter an email and password.');
     }
   };
   const signupFormHandler = async (event) => {
@@ -33,13 +36,13 @@ const loginFormHandler = async (event) => {
         body: JSON.stringify({ username, email, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-  
-      // if (response.ok) {
-      //   alert('Account successfully created. Please log in to continue')
-      //   document.location.replace('/');
-      // } 
+      if (response.ok) {
+        console.log(response);
+        alert('Account successfully created. Please log in to continue')
+        document.location.replace('/');
+      } 
     }else {
-      alert('Please enter a valid username, email address, and password');
+      alert('Oops! Please enter a valid username, email, and password.');
     }
   };
   
