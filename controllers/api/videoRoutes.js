@@ -75,6 +75,7 @@ router.get('/view', withAuth, async (req) => {
   const ytVideo = getVideo.map((video) => video.get({ plain: true }));
     // take the repsonse from the videoSearch function
     res.render('videoView', { ytVideo, logged_in: req.session.logged_in });
+    console.log('youtube_id: ', video.youtube_id)
       }catch (err) {
       res.status(500).json(err);
     }
