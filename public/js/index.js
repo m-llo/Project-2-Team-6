@@ -70,7 +70,7 @@ const postHobby = async (event) => {
 // Videos routes ------------------------------------------------- 
   const postVideo = async () => {
     const videoTitle = document.querySelector('.videoCardTitle').textContent;
-    const videoThumbnail = document.querySelector('.videoCardThumbnail').textContent;
+    const videoThumbnail = document.querySelector('.videoCardThumbnail').dataset.index;
     const videoYTID = document.querySelector('.videoCardYTID').textContent;
     const hobbyName = document.querySelector('#hobby_name').textContent;
     console.log("Saving Video: ", videoTitle, "to", hobbyName)
@@ -127,7 +127,9 @@ const postHobby = async (event) => {
 
 
   const viewSavedVideo = async () => {
+
     const ytVideoId = document.querySelector('.savedvideoCardYTID').textContent;
+
     
     try{
       const response = await fetch('/api/videos/view', {

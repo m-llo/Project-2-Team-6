@@ -1,5 +1,6 @@
 // const { response } = require("express");
 
+
 //user login
 const loginFormHandler = async (event) => {
     event.preventDefault();
@@ -30,7 +31,7 @@ const loginFormHandler = async (event) => {
     const password = document.querySelector('#password-signup').value.trim();
   
     if (username && email && password) {
-      console.log('this is the if statment');
+      console.log('this is the if statment in sign');
       const response = await fetch('/api/user/', {
         method: 'POST',
         body: JSON.stringify({ username, email, password }),

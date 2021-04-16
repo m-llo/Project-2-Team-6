@@ -86,9 +86,19 @@ router.get('/notes/:id', withAuth, async (req, res) => {
 
   try {
       const dbNotesData = await Notes.findByPk(req.params.id);
+
+      const dbVideoData = await Videos.findAll({where: {video_id: req.body.name}},{
+        include:[
+          {
+            model:Notes,
+            attributes:['id', 'title', 'text' ]
+          }
+      ],
+      });
+        
       if(!dbNotesData) {
         res.status(404).json({message: 'No notes with this id!'});
-        return;
+        
     }
       const singleNotes = dbNotesData.get({ plain: true });
       console.log(singleNotes);
