@@ -6,6 +6,7 @@ const hobbySearch = require('../../utils/hobbysearch');
 const newVideoSearch = require('../../utils/newvideosearch');
 
 router.post('/new/hobby', async (req, res) => {
+    console.log(res);
     console.log("new hobby post route: ", req.body.name)
 
     try {
@@ -17,6 +18,7 @@ router.post('/new/hobby', async (req, res) => {
         console.log("new hobby added:", newHobby)
 
     } catch (err) {
+       
         res.status(400).json(err);
         return
     }
