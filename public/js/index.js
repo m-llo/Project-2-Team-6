@@ -139,7 +139,9 @@ const postHobby = async (event) => {
 
 
   const viewSavedVideo = async () => {
+
     const ytVideoId = document.querySelector('.savedvideoCardYTID').textContent;
+
     
     try{
       const response = await fetch('/api/videos/view', {
