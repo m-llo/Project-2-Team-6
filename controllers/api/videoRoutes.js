@@ -1,28 +1,20 @@
 const router = require('express').Router();
-const { Videos } = require('../../models');
+const { Videos, Hobby } = require('../../models');
 const withAuth = require('../../utils/auth');
-const {savedVideoSearch, newVideoSearch} = require('../../utils/videosearch');
+// const { savedVideoSearch, newVideoSearch } = require('../../utils/videosearch');
 
 
 
-
-// router.get('/', withAuth, async (req) => {
-//     const hobby = req.body.name
-//     try{
-//         const getVideos = newVideoSearch(hobby)
-    
-//     const ytvideos = getVideos.map((video) => video.get({ plain: true }));
-//     // take the repsonse from the videoSearch function
-//     res.render('dashboard', { ytvideos, logged_in: req.session.logged_in });
-//       }catch (err) {
-//       res.status(500).json(err);
-//     }
-//   });
-
-
-router.post('/save', withAuth, async (req, res) => {
+router.post('/save', async (req, res) => {
     try {
+        const hobbyid = await Hobby.findOne({
+            where: {
+                name: req.body.hobbyName,
+                user_id: req.session.user_id
+            }
+        });
         const newVideo = await Videos.create({
+
 
           title: req.body.title,
           youtube_id: req.body.youtube_id,
@@ -45,6 +37,7 @@ router.post('/save', withAuth, async (req, res) => {
         console.log(err);
         res.status(400).json(err);
         return;
+
     }
 });
 
@@ -59,60 +52,40 @@ router.delete('/delete/:id', withAuth, async (req, res) => {
         });
 
         if (!videoData) {
-            res.status(404).json({ message: 'video not found'})
+            res.status(404).json({ message: 'video not found' })
         }
     } catch (err) {
         res.status(500).json(err);
     }
 })
-// add on frontend  fetch with the URL adding the video id on th end when user clicks li nav
-// add youtube api fetch by video.video_id.url
+
 router.get('/view', withAuth, async (req) => {
-    try{
-        const videoData = await Videos.findOne({where: youtube_id = req.body.id,
-        include:[
-             {
-                model: Notes,
-                attributes:[
-                    'title',
-                    'text',
-                    'id',
+    try {
+        const videoData = await Videos.findOne({
+            where: {
+                youtube_id: req.body.id,
+                include: [
+                    {
+                        model: Notes,
+                        attributes: [
+                            'title',
+                            'text',
+                            'id',
+                        ]
+                    }
                 ]
-             }
-        ]
-      });
-    
-    const video =  videoData.get({ plain: true });
-    const ytId = video.youtube_id
-// youtube by video_id into the search function
-  const  getVideo =  savedVideoSearch(ytId)
+            }
+        });
 
-  const ytVideo = getVideo.map((video) => video.get({ plain: true }));
-    // take the repsonse from the videoSearch function
-    res.render('videoView', { ytVideo, logged_in: req.session.logged_in });
-      }catch (err) {
-      res.status(500).json(err);
+        const video = videoData.get({ plain: true });
+        //  hard code into handlebars iframe the src="https://www.youtube.com/watch?v=" 
+        // then add video.youtube_id to the end of the src
+
+        res.render('videoView', { video, logged_in: req.session.logged_in });
+    } catch (err) {
+        res.status(500).json(err);
     }
-  });
-
-
-
-
- 
-
-  router.get('/playlist', withAuth, async (req) => {
-    try{
-        const videoData = await Videos.findOne({where: {name:req.body.name}});
-        
-    
-    const playlist = videoData.map((videos) => videos.get({ plain: true }));
-   
-    res.render('dashboard', { playlist, logged_in: req.session.logged_in });
-      }catch (err) {
-      res.status(500).json(err);
-    }
-  });
-
+});
 
 
 module.exports = router;
