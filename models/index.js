@@ -13,9 +13,9 @@ User.hasMany(Hobby, {
 });
 
 
-Videos.belongsTo(Hobby, {
-    foreignKey: 'hobby_id'
-});
+// Videos.belongsTo(Hobby, {
+//     foreignKey: 'hobby_id'
+// });
 
 Hobby.hasMany(Videos, {
     foreignKey: 'hobby_id',
