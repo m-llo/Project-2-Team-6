@@ -23,13 +23,28 @@ const {savedVideoSearch, newVideoSearch} = require('../../utils/videosearch');
 router.post('/save', withAuth, async (req, res) => {
     try {
         const newVideo = await Videos.create({
-            ...req.body,
+
+          title: req.body.title,
+          youtube_id: req.body.youtube_id,
+          URL: req.body.URL,
+          thumbnail: req.body.thumbnail,
+          description: req.body.description,
+          hobby_id: req.body.hobby_id
+          
+            
         
         });
-
-        res.status(200).alert("video Saved");
+        req.session.save(() => {
+            req.session.logged_in = true;
+      
+            res.status(200).json(newVideo);
+            // res.status(200).alert("video Saved");
+          });    
+        
     } catch (err) {
+        console.log(err);
         res.status(400).json(err);
+        return;
     }
 });
 
