@@ -21,12 +21,13 @@ const withAuth = require('../../utils/auth');
 
 
 // CREATE new Notes
-router.post('/', async (req, res) => {
+router.post('/save', async (req, res) => {
+  console.log("route");
   try {
-    const dbNotesData = await User.create({
+    const dbNotesData = await Notes.create({
       title: req.body.title,
       text: req.body.text,
-      
+      videos_id: req.body.videos_id,
     });
 
     req.session.save(() => {
@@ -41,19 +42,19 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async(req, res) => {
-    // update a category by its `id` value
+router.put('/update/:id', async(req, res) => {
+    // update a node by its `id` value
     Notes.update(
       {
         // All the fields you can update and the data attached to the request body.
         title: req.body.title,
-        content: req.body.text,
-        
+        text: req.body.text,
+        videos_id: req.body.videos_id,
       },
       {
         // Gets a book based on the book_id given in the request parameters
         where: {
-          id: req.session.user_id,
+          id: req.params.id,
         },
       }
     ) .then((updateNotes) => {
@@ -65,12 +66,12 @@ router.put('/:id', async(req, res) => {
     });
   });
 
-  router.delete('/:id', async (req, res) => {
+  router.delete('/delete/:id', async (req, res) => {
     try {
-      const dbNotesData = await Posts.destroy({
+      const dbNotesData = await Notes.destroy({
         where: {
-          id: req.session.user_id,
-          user_id: req.session.user_id,
+         
+          id: req.params.id,
         },
       });
   

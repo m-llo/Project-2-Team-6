@@ -1,4 +1,8 @@
 const router = require('express').Router();
+require('dotenv').config();
+// how to search by either url or unique video_id
+const ytApiKey = process.env.API_SECRET;
+const fetch = require("node-fetch");
 
 const nodemailer = require('nodemailer');
 
@@ -42,7 +46,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/noteslist/:id', withAuth, async (req, res) => {
+router.get('/video/:id', withAuth, async (req, res) => {
   try {
       const dbVideoData = await Videos.findByPk(req.params.id,{
         include:[
@@ -64,19 +68,19 @@ router.get('/noteslist/:id', withAuth, async (req, res) => {
 });
 
 
-router.get('/video/:id', withAuth, async (req, res) => {
-  try {
-      const dbvideoData = await Videos.findByPk(req.params.id);
-      const singlevideo = dbNotesData.get({ plain: true });
-      console.log(singlevideo);
-          res.render('videoView', { singlevideo, loggedIn: req.session.loggedIn });
+// router.get('/video/:id', withAuth, async (req, res) => {
+//   try {
+//       const dbvideoData = await Videos.findByPk(req.params.id);
+//       const singlevideo = dbNotesData.get({ plain: true });
+//       console.log(singlevideo);
+//           res.render('videoView', { singlevideo, loggedIn: req.session.loggedIn });
   
   
-    }catch (err) {
-      console.log(err); 
-    res.status(500).json(err);
-  }
-});
+//     }catch (err) {
+//       console.log(err); 
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/notes/:id', withAuth, async (req, res) => {
 
@@ -129,14 +133,14 @@ router.get('/playlist/:id', async (req, res) => {
 
 router.get('/newvideos/:hobby', async (req, res) => {
     const hobby = req.params.hobby
-  console.log("getting videos server running, searching for: ", hobby);
   try {
+    const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
+    console.log("hobbyData", hobbyData);
+    const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));  
+    const ytVideos = await newVideoSearch(hobby)
     
-    const newVideoResults = await newVideoSearch(hobby)
-    console.log("new video results from yt fetch: ", newVideoResults)
-    const ytVideos = newVideoResults.map((videoData) => videoData.get({ plain: true }));
-    console.log("ytVideos mapped plain: ",ytVideos)
-          res.render('dashboard',  {hobby, ytVideos, loggedIn: req.session.loggedIn});
+    console.log("new video results from yt fetch: ", ytVideos)
+  res.render('dashboard',  {hobby, ytVideos, hobbies, loggedIn: req.session.loggedIn});
     }catch (err) {
       console.log(err); 
     return res.status(500).json(err);
