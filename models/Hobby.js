@@ -7,9 +7,9 @@ Hobby.init(
     {
         id: {
             type: DataTypes.INTEGER,
-            allownull: false,
             primaryKey: true,
             autoIncrement: true,
+            allowNull: false,
         },
         name: {
             type: DataTypes.STRING,
