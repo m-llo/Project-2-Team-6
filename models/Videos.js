@@ -19,18 +19,18 @@ Videos.init(
         youtube_id: {
             type: DataTypes.STRING,
         },
-        URL: {
-            type: DataTypes.STRING,
-            // url: DataTypes.STRING,
-        },
+        // URL: {
+        //     type: DataTypes.STRING,
+        //     // url: DataTypes.STRING,
+        // },
         thumbnail: {
             type: DataTypes.STRING,
             // url: DataTypes.STRING,
         },
-        description: {
-            type: DataTypes.STRING,
-            // url: DataTypes.STRING,
-        },
+        // description: {
+        //     type: DataTypes.STRING,
+        //     // url: DataTypes.STRING,
+        // },
         
         hobby_id: {
             type: DataTypes.INTEGER,

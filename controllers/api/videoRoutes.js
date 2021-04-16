@@ -13,15 +13,16 @@ router.post('/save', async (req, res) => {
                 user_id: req.session.user_id
             }
         });
+        console.log("hobby id line 16 /save: ", hobbyid.id)
+        console.log("type of hobbyId ", typeof hobbyid.id)
         const newVideo = await Videos.create({
 
 
           title: req.body.title,
           youtube_id: req.body.youtube_id,
-          URL: req.body.URL,
           thumbnail: req.body.thumbnail,
           description: req.body.description,
-          hobby_id: req.body.hobby_id
+          hobby_id: hobbyid.id
           
             
         
