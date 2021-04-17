@@ -36,12 +36,15 @@ PHASE ONE
 
 PHASE TWO
 
-<li>text</li>
-<li>text</li>
+<li>Enable addition of notes.</li>
+<li>Enable addition of vidoes.</li>
 
 <br>
 
 ## Wireframe
+<img src="Assets/CURATIO.png"
+     alt="Wireframe of CURATIO login"
+     />
 
 <br>
 
