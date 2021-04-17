@@ -84,32 +84,109 @@ $(hobbyDeleteButton).on("click", function () {
 
 
 // Videos routes ------------------------------------------------- 
-const postVideo = async () => {
-  const videoTitle = document.querySelector('.videoCardTitle').textContent;
-  const videoThumbnail = document.querySelector('.videoCardThumbnail').dataset.index;
-  const videoYTID = document.querySelector('.videoCardYTID').textContent;
-  const hobbyName = document.querySelector('#hobby_name').textContent;
-  console.log("Saving Video: ", videoTitle, "to", hobbyName)
-  try{
-    const response = await fetch('/api/videos/save', {
-      method: 'POST',
-      body: JSON.stringify({
-        title: videoTitle,
-        youtube_id: videoYTID,
-        thumbnail: videoThumbnail,
-        hobbyName:hobbyName
-      }),
-      headers: { 'Content-Type': 'application/json' },
+
+const saveButtons = $('.newVidSave')
+  
+saveButtons.on("click", async function () {
+      const videoTitle = $(this).attr("data-title");
+      const videoThumbnail = $(this).attr("data-type");
+      const videoYTID = $(this).attr("data-index");
+      
+      const hobby_Id =  $("#hobby_name").attr("data-value")
+           
+      console.log(videoTitle)
+      console.log(videoThumbnail)
+      console.log(videoYTID)
+     
+      console.log(hobby_Id)
+     
+      console.log("Saving Video: ", videoTitle, "to", hobby_Id)
+      try{
+          const response = await fetch('/api/videos/save', {
+            method: 'POST',
+            body: JSON.stringify({
+              title: videoTitle,
+              youtube_id: videoYTID,
+              thumbnail: videoThumbnail,
+              hobby_Id:hobby_Id
+            }),
+            headers: { 'Content-Type': 'application/json' },
+          });
+          if (response.ok) {
+            alert("video Saved")
+          } else {
+            alert('Failed to save video, Please make sure to create your playlist first');
+          }
+        }catch(error){
+          console.log(error)
+        }
     });
-    if (response.ok) {
-      alert("video Saved")
-    } else {
-      alert('Failed to save video, Please make sure to create your playlist first');
-    }
-  }catch(error){
-    console.log(error)
-  }
-};  
+
+
+// const postVideo = async (event) => {
+//   const video = event.target;
+//   const videoTitle = JSON.parse(video.parentElement.getAttribute('data-title'))
+//   const videoThumbnail = JSON.parse(video.parentElement.getAttribute('data-type'))
+//   const videoYTID = JSON.parse(video.parentElement.getAttribute('data-index'))
+//   const hobbyID = JSON.parse(video.parentElement.getAttribute('data-id'))
+//   console.log(videoTitle)
+//       console.log(videoThumbnail)
+//       console.log(videoYTID)
+//       console.log(hobbyID)
+//   console.log("Saving Video: ", videoTitle, "to", hobbyID)
+  // try{
+  //   const response = await fetch('/api/videos/save', {
+  //     method: 'POST',
+  //     body: JSON.stringify({
+  //       title: videoTitle,
+  //       youtube_id: videoYTID,
+  //       thumbnail: videoThumbnail,
+  //       hobbyName:hobbyName
+  //     }),
+  //     headers: { 'Content-Type': 'application/json' },
+  //   });
+  //   if (response.ok) {
+  //     alert("video Saved")
+  //   } else {
+  //     alert('Failed to save video, Please make sure to create your playlist first');
+  //   }
+  // }catch(error){
+  //   console.log(error)
+  // }
+// };  
+
+
+// const postVideo = async () => {
+//   const videoTitle = document.querySelector('.videoCardTitle').textContent;
+//   const videoThumbnail = document.querySelector('.videoCardThumbnail').dataset.index;
+//   const videoYTID = document.querySelector('.videoCardYTID').textContent;
+//   const hobbyName = document.querySelector('#hobby_name').textContent;
+//   console.log(hobbyName)
+//   console.log($("#hobby_name").val())
+//  const hobby_name = document.querySelector('#hobby_name').value
+//   console.log(hobby_name)
+ 
+//   console.log("Saving Video: ", videoTitle, "to", hobbyName)
+//   try{
+//     const response = await fetch('/api/videos/save', {
+//       method: 'POST',
+//       body: JSON.stringify({
+//         title: videoTitle,
+//         youtube_id: videoYTID,
+//         thumbnail: videoThumbnail,
+//         hobbyName:hobbyName
+//       }),
+//       headers: { 'Content-Type': 'application/json' },
+//     });
+//     if (response.ok) {
+//       alert("video Saved")
+//     } else {
+//       alert('Failed to save video, Please make sure to create your playlist first');
+//     }
+//   }catch(error){
+//     console.log(error)
+//   }
+// };  
 
 
   const getNewVideos = async (event) => {
@@ -203,9 +280,8 @@ const postVideo = async () => {
   //   })
 
 
-  const saveButtons = document.querySelectorAll('.newVidSave')
-  saveButtons.forEach((el,idx)=>{
-    el.addEventListener('click', postVideo)
-    
-  })
+  // const saveButtons = document.querySelectorAll('.newVidSave')
+  // saveButtons.forEach((el,idx)=>{
+  //   el.addEventListener('click', postVideo) 
+  // })
 
