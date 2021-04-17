@@ -57,7 +57,7 @@
         {{#each playList as |video|}}
         <div class='col-auto card text-white bg-dark m-2' style='width: 18rem;'>
           <img class="savedvideoCardThumbnail border-dark img-fluid rounded mx-auto d-block card-img-top"
-            src={{{video.thumbnail}}} alt="thumbnail image"></img>
+            src={{{video.thumbnail}}} alt="thumbnail image" data-index="{{{video.snippet.thumbnails.high.url}}}"></img>
           <div class='videoCardBody card-body'>
             <h6 class="savedvideoCardTitle card-title text-center">{{{video.title}}}</h6>
             <p class="savedvideoCardDesc">{{{video.description}}}</p>
@@ -123,9 +123,7 @@
   </div>
   </main>
 </div>
-
 </div>
 </div>
-
 <script src="/js/index.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
