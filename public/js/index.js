@@ -84,32 +84,33 @@ $(hobbyDeleteButton).on("click", function () {
 
 
 // Videos routes ------------------------------------------------- 
-  const postVideo = async () => {
-    const videoTitle = document.querySelector('.videoCardTitle').textContent;
-    const videoThumbnail = document.querySelector('.videoCardThumbnail').textContent;
-    const videoYTID = document.querySelector('.videoCardYTID').textContent;
-    const hobbyName = document.querySelector('#hobby_name').textContent;
-    console.log("Saving Video: ", videoTitle, "to", hobbyName)
-    try{
-      const response = await fetch('/api/videos/save', {
-        method: 'POST',
-        body: JSON.stringify({
-          title: videoTitle,
-          youtube_id: videoYTID,
-          thumbnail: videoThumbnail,
-          hobbyName:hobbyName
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      if (response.ok) {
-        alert("video Saved")
-      } else {
-        alert('Failed to save video, Please make sure to create your playlist first');
-      }
-    }catch(error){
-      console.log(error)
+const postVideo = async () => {
+  const videoTitle = document.querySelector('.videoCardTitle').textContent;
+  const videoThumbnail = document.querySelector('.videoCardThumbnail').dataset.index;
+  const videoYTID = document.querySelector('.videoCardYTID').textContent;
+  const hobbyName = document.querySelector('#hobby_name').textContent;
+  console.log("Saving Video: ", videoTitle, "to", hobbyName)
+  try{
+    const response = await fetch('/api/videos/save', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: videoTitle,
+        youtube_id: videoYTID,
+        thumbnail: videoThumbnail,
+        hobbyName:hobbyName
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (response.ok) {
+      alert("video Saved")
+    } else {
+      alert('Failed to save video, Please make sure to create your playlist first');
     }
-  };
+  }catch(error){
+    console.log(error)
+  }
+};  
+
 
   const getNewVideos = async (event) => {
     event.preventDefault();
