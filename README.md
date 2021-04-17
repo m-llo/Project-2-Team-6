@@ -46,6 +46,6 @@ PHASE TWO
 <br>
 
 ## DEMO
-CURATIO is deployed to Heroku, take a look here!
+CURATIO is deployed to Heroku, take a look [here](http://localhost:3001/login)!
 
-CURATIO is hosted here: CURATIO.
+CURATIO is hosted here: [CURATIO](https://stormy-river-69253.herokuapp.com/login).
