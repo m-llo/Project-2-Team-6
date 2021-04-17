@@ -5,7 +5,7 @@ This app allows users to login into their CURATIO workspace and create new hobby
 
 ## User Story
 <ul>AS A Person interested in many hobbies</ul>
-<ul>I WANT a place to view all of my hobbies, store notes, and send notes to my email on those different hobbies</ul>
+<ul>I WANT a place to view all of my hobby playlists, and store notes those different hobbies</ul>
 <ul>SO THAT I can complete the project.</ul>
 
 <br>
