@@ -47,22 +47,38 @@ const postHobby = async (event) => {
   //   }
   // };
 
-  const deleteHobby = async (event) => {
-    console.log("Delete function called");
-    if (event.target.hassAttribute('data-confirm')) {
-      const id = event.target.getAttribute('eventHobby');
 
-      const response = await fetch(`/api/hobby/${id}`, {
-        method: 'DELETE',
-      });
+//  const deleteHobby = () => {
+  const hobbyDeleteButton = $(".deleteHobby");
+$(hobbyDeleteButton).on("click", function () {
+  const hobbyID = $(this).val();
+  console.log('value: ', hobbyID)
+  console.log("Deleting Hobby: ", hobbyID )
+  
+  const response = fetch(`/api/dashboard/hobby/delete/${hobbyID}`, {
+    method: 'DELETE',
+  });
+    alert("Hobby playlist succesffully deleted.")
+    document.location.replace('/');
+});
+//  }
 
-      if (response.ok) {
-        document.location.replace('/dashboard');
-      } else {
-        alert('Could not delete hobby from list');
-      }
-    }
-  };
+  // const deleteHobby = async (event) => {
+  //   console.log("Delete function called");
+  //   if (event.target.hassAttribute('data-confirm')) {
+  //     const id = event.target.getAttribute('eventHobby');
+
+  //     const response = await fetch(`/api/hobby/${id}`, {
+  //       method: 'DELETE',
+  //     });
+
+  //     if (response.ok) {
+  //       document.location.replace('/dashboard');
+  //     } else {
+  //       alert('Could not delete hobby from list');
+  //     }
+  //   }
+  // };
 
 
 
@@ -103,46 +119,67 @@ const postHobby = async (event) => {
     document.location.replace(`/newvideos/${hobby}`)
   };
 
-
-  const deleteVideo = async () => {
-    const ytVideoId = document.querySelector('.savedvideoCardID');
-    try{
-      const response = await fetch('/api/videos/delete', {
-        method: 'DELETE',
-        body: JSON.stringify({
-          id:  ytVideoId
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });if (response.ok) {
-        res.status(200);
-        alert("Video succesffully deleted from playlist.")
-        document.location.replace('/');
-      } else {
-        alert('Failed to delete video from playlist');
-      }
-    }catch(error){
-        res.status(400)
-    }
-  };
+  const vidDeleteButton = $(".deleteVid");
+  
+  $(vidDeleteButton).on("click", function () {
+    const ytID = $(this).val();
+    console.log('value: ', ytID)
+    // var ytIDAttr = $(this).attr("value")
+    // console.log('attr: ',ytIDAttr)
+    console.log("Deleting Video: ", ytID )
+    const response = fetch(`/api/videos/delete/${ytID}`,{
+      method: 'DELETE',
+    })
+      alert("Video succesffully deleted from playlist.")
+      document.location.replace('/');
+});
 
 
-  const viewSavedVideo = async () => {
 
-    const ytVideoId = document.querySelector('.savedvideoCardYTID').textContent;
+
+  // const deleteVideo = async () => {
 
     
-    try{
-      const response = await fetch('/api/videos/view', {
-        method: 'GET',
-        body: JSON.stringify({
-          id: ytVideoId
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }catch(error){
-        res.status(400)
-    }
-  };
+  //   const video = document.querySelector('savedvideoCardYTID');
+  //   const ytID = video.getAttribute('value')
+  //   console.log("Deleting Video: ", ytID )
+  //   try{
+  //     const response = await fetch(`/api/videos/delete/${ytVideoId}`)
+  //     // , {
+  //       // method: 'DELETE',
+  //       // body: JSON.stringify({
+  //       //   id:  ytVideoId
+  //       // }),
+  //       // headers: { 'Content-Type': 'application/json' },
+  //     // }
+      
+  //     if (response.ok) {
+  //       alert("Video succesffully deleted from playlist.")
+  //       document.location.replace('/');
+  //     } else {
+  //       alert('Failed to delete video from playlist');
+  //     }
+  //   }catch(error){
+  //     console.log(error)
+  //   }
+  // };
+
+
+  // const viewSavedVideo = async () => {
+  //   const ytVideoId = document.querySelector('.savedvideoCardYTID').textContent;
+    
+  //   try{
+  //     const response = await fetch('/api/videos/view', {
+  //       method: 'GET',
+  //       body: JSON.stringify({
+  //         id: ytVideoId
+  //       }),
+  //       headers: { 'Content-Type': 'application/json' },
+  //     });
+  //   }catch(error){
+  //       console.log(error)
+  //   }
+  // };
 
 
   document
@@ -153,21 +190,16 @@ const postHobby = async (event) => {
     .querySelector('#newVidSearch')
     .addEventListener('click', getNewVideos); 
 
-    const viewVideoButtons = document.querySelectorAll('.savedVidView')
-    viewVideoButtons.forEach((el,idx)=>{
-      el.addEventListener('click', viewSavedVideo)
-    })
-
-    const videoDeleteButtons = document.querySelectorAll('.deleteVid')
-    viewVideoButtons.forEach((el,idx)=>{
-      el.addEventListener('click', deleteVideo)
-    })
+    // const videoDeleteButtons = document.querySelectorAll('.deleteVid')
+    // videoDeleteButtons.forEach((el,idx)=>{
+    //   el.addEventListener('click', deleteVideo)
+    // })
     
 
-  const deltetHobbyButtons = document.querySelectorAll('.deleteHobby')
-  deltetHobbyButtons.forEach((el,idx)=>{
-      el.addEventListener('click', deleteHobby)
-    })
+  // const deltetHobbyButtons = document.querySelectorAll('.deleteHobby')
+  // deltetHobbyButtons.forEach((el,idx)=>{
+  //     el.addEventListener('click', deleteHobby)
+  //   })
 
 
   const saveButtons = document.querySelectorAll('.newVidSave')
