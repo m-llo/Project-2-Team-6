@@ -86,7 +86,7 @@ $(hobbyDeleteButton).on("click", function () {
 // Videos routes ------------------------------------------------- 
   const postVideo = async () => {
     const videoTitle = document.querySelector('.videoCardTitle').textContent;
-    const videoThumbnail = document.querySelector('.videoCardThumbnail').textContent;
+    const videoThumbnail = document.querySelector('.videoCardThumbnail').dataset.index;
     const videoYTID = document.querySelector('.videoCardYTID').textContent;
     const hobbyName = document.querySelector('#hobby_name').textContent;
     console.log("Saving Video: ", videoTitle, "to", hobbyName)
@@ -136,7 +136,9 @@ $(hobbyDeleteButton).on("click", function () {
 
 
 
+
   // const deleteVideo = async () => {
+
     
   //   const video = document.querySelector('savedvideoCardYTID');
   //   const ytID = video.getAttribute('value')

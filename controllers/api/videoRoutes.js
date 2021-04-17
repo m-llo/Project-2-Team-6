@@ -76,8 +76,10 @@ router.get('/view', withAuth, async (req) => {
                         ]
                     }
                 ]
+
             }
         });
+
 
         const video = videoData.get({ plain: true });
         //  hard code into handlebars iframe the src="https://www.youtube.com/watch?v=" 
