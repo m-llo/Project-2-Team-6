@@ -43,20 +43,21 @@ router.post('/save', async (req, res) => {
 });
 
 // when user clicks delete button next to video
-router.delete('/delete/:id', withAuth, async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         const videoData = await Videos.destroy({
             where: {
                 id: req.params.id,
-                user_id: req.session.user_id,
+                // user_id: req.session.user_id,
             },
+            
         });
-
+        res.status(200);
         if (!videoData) {
             res.status(404).json({ message: 'video not found' })
         }
     } catch (err) {
-        res.status(500).json(err);
+       return res.status(500).json(err);
     }
 })
 

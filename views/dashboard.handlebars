@@ -1,3 +1,8 @@
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>  
+
   <div class="container-fluid">
     <div class="row">
       <nav id="savedHobbies" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -17,7 +22,7 @@
               <h5 class="savedHobbyName">{{{hobby.name}}}</h5>
             </a>
             <button class="btn btn-danger btn-sm deleteHobby" type="submit"
-              data-confirm="Are you sure you want to remove this from your saved hobbies?">Delete</button>
+              data-confirm="Are you sure you want to remove this from your saved hobbies?" value="{{{hobby.id}}}">Delete</button>
           {{!-- </li> --}}
           {{/each}}
         {{!-- </ul> --}}
@@ -53,8 +58,10 @@
                   <p hidden class="savedvideoCardYTID">{{{video.youtube_id}}}</p>
                   <div class="d-flex justify-content-between">
                   {{!-- <button class="btn btn-success btn-sm savedVidView" type="submit">View</button> --}}
-                   <a href="/noteslist/{{{video.id}}}" class="btn btn-sm btn-success active savedVidView" role="button">View</a>
-                  <button class="btn btn-danger btn-sm deleteVid" type="submit">Delete</button>
+                   <a href="/video/{{{video.id}}}" class="btn btn-sm btn-success active" role="button">View</a>
+                   <div>
+                  <button class="btn btn-danger btn-sm deleteVid" value="{{{video.id}}}"  type="submit">Delete</button>
+                  </div>
                   </div>
              </div>
            </div>
