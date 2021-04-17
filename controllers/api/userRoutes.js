@@ -1,48 +1,51 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 const nodemailer = require('nodemailer');
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 
 
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
-
-    // req.session.save(() => {
     req.session.user_id = userData.id;
     req.session.logged_in = true;
+    const oauth2Client = new OAuth2(
+      process.env.OAUTH_CLIENT_ID,
+      process.env.OAUTH_CLIENT_SECRET,
+      "https://developers.google.com/oauthplayground" // Redirect URL
+    );
+    oauth2Client.setCredentials({
+      refresh_token: process.env.OAUTH_REFRESH_TOKEN
+    });
+    const accessToken = oauth2Client.getAccessToken()
 
-    // send confirmation email using NPM package nodemailer
-    //nodemailer.createTestAccount(async (err, account) => {
-      // create reusable transporter object using the default SMTP transport
-      let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        // host: 'smtp.ethereal.email',
-        // port: 587,
-        // secure: false, // true for 465, false for other ports
-        auth: {
-          type: '0Auth2',
-          user: process.env.MAIL_USERNAME, //dotenv
-          pass: process.env.MAIL_PASSWORD,
-          clientId: process.env.OAUTH_CLIENTID,
-          clientSecret: process.env.OAUTH_CLIENT_SECRET,
-          refreshToken: process.env.OAUTH_REFRESH_TOKEN
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: process.env.MAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENT_ID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+        accessToken: accessToken,
+        tls: {
+          rejectUnauthorized: false
         }
-      });
-      //let info = transporter.sendMail({ //removed await from this line
-      let mailOptions = {
-        from: '"CURATIO" <\'host@curatio.com\'>',
-        to: "kay43540@gmail.com",
-        subject: "Nodemailer Project",
-        text: "Hi from your nodemailer project"
-      };
-      //});
-      //console.log("Message sent: %s", info.messageId);
-      //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    //});
-    transporter.sendMail(mailOptions, function(err, data) {
+      }
+    });
+
+    let mailOptions = {
+      from: '"CURATIO" <\'host@curatio.com\'>',
+      to: userData.email,
+      subject: "Nodemailer Project",
+      text: "Hi from your nodemailer project"
+    };
+    transporter.sendMail(mailOptions, function (err, response) {
       if (err) {
-        console.log("Error " + err);
+        console.log("Error sending email:" + err);
       } else {
+        console.log(response);
         console.log("Email sent successfully");
       }
     });

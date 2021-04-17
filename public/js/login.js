@@ -38,10 +38,10 @@ const loginFormHandler = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
       if (response.ok) {
-        console.log(response);
-        alert('Account successfully created. Please log in to continue')
         document.location.replace('/');
-      } 
+      } else {
+        alert('Invalid account details, failed to register.');
+      }
     }else {
       alert('Oops! Please enter a valid username, email, and password.');
     }
