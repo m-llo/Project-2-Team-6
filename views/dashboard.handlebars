@@ -55,7 +55,7 @@
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
         id="playlistDisplay">
         {{#each playList as |video|}}
-        <div class='col-auto card text-white bg-dark m-2' style='width: 18rem;'>
+        <div class='col-auto card text-white bg-dark m-2' style='width: 18rem;' id="video-{{{video.id}}}">
           <img class="savedvideoCardThumbnail border-dark img-fluid rounded mx-auto d-block card-img-top"
             src={{{video.thumbnail}}} alt="thumbnail image" data-index="{{{video.snippet.thumbnails.high.url}}}"></img>
           <div class='videoCardBody card-body'>

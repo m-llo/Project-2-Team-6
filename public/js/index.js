@@ -209,7 +209,7 @@ saveButtons.on("click", async function () {
       method: 'DELETE',
     })
       alert("Video succesffully deleted from playlist.")
-      document.location.replace('/');
+      $("#video-"+ytID).remove();
 });
 
 
