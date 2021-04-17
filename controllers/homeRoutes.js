@@ -147,10 +147,19 @@ router.get('/newvideos/:hobby', async (req, res) => {
     const hobbyData = await Hobby.findAll({where: {user_id: req.session.user_id}});
     console.log("hobbyData", hobbyData);
     const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));  
+
+    const hobbyId = await Hobby.findOne({where: {
+      user_id: req.session.user_id,
+      name: hobby
+    }});
+    console.log("hobbyId", hobbyId.id);
+    // const hobbies = hobbyData.map((hobby) => hobby.get({ plain: true }));  
+
     const ytVideos = await newVideoSearch(hobby)
+    const hobby_id= hobbyId.id
     
     console.log("new video results from yt fetch: ", ytVideos)
-  res.render('dashboard',  {hobby, ytVideos, hobbies, loggedIn: req.session.loggedIn});
+  res.render('dashboard',  {hobby, ytVideos, hobby_id, hobbies, loggedIn: req.session.loggedIn});
     }catch (err) {
       console.log(err); 
     return res.status(500).json(err);

@@ -19,7 +19,7 @@ const handleNoteSave=async (event) =>{
         body: JSON.stringify({
           title:title,
           text:text,
-          videos_id:1
+          videos_id:videos_id 
         }),
         headers:{
           'Content-Type': 'application/json',

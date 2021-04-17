@@ -7,14 +7,15 @@ const withAuth = require('../../utils/auth');
 
 router.post('/save', async (req, res) => {
     try {
-        const hobbyid = await Hobby.findOne({
-            where: {
-                name: req.body.hobbyName,
-                user_id: req.session.user_id
-            }
-        });
-        console.log("hobby id line 16 /save: ", hobbyid.id)
-        console.log("type of hobbyId ", typeof hobbyid.id)
+        // const hobbyid = await Hobby.findOne({
+        //     where: {
+        //         id: req.body.hobby_Id,
+        //         // user_id: req.session.user_id
+        //     }
+        // });
+        console.log("type of hobbyId ", typeof hobbyid)
+        // console.log("hobby id line 16 /save: ", hobbyid.id)
+        // console.log("type of hobbyId ", typeof hobbyid.id)
         const newVideo = await Videos.create({
 
 
@@ -22,7 +23,7 @@ router.post('/save', async (req, res) => {
           youtube_id: req.body.youtube_id,
           thumbnail: req.body.thumbnail,
           description: req.body.description,
-          hobby_id: hobbyid.id
+          hobby_id: req.body.hobby_Id,
           
             
         
