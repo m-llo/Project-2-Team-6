@@ -36,16 +36,19 @@ PHASE ONE
 
 PHASE TWO
 
-<li>text</li>
-<li>text</li>
+<li>Enable addition of notes.</li>
+<li>Enable addition of vidoes.</li>
 
 <br>
 
 ## Wireframe
+<img src="Assets/CURATIO.png"
+     alt="Wireframe of CURATIO login"
+     />
 
 <br>
 
 ## DEMO
-CURATIO is deployed to Heroku, take a look here!
+CURATIO is deployed to Heroku, take a look [here](http://localhost:3001/login)!
 
-CURATIO is hosted here: CURATIO.
+CURATIO is hosted here: [CURATIO](https://stormy-river-69253.herokuapp.com/login).
